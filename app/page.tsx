@@ -129,12 +129,8 @@ export default function LandingPage() {
   }
 
   const toggleSection = (section: string) => {
-    if (expandedSection === section) {
-      setExpandedSection(null)
-    } else {
-      setExpandedSection(section)
-    }
-  }
+    setExpandedSection(prev => prev === section ? '' : section);
+  };
 
   const handleInquire = (modelName: string) => {
     openWhatsApp(modelName)
@@ -142,8 +138,101 @@ export default function LandingPage() {
 
   const [selectedModel, setSelectedModel] = useState(0);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Validate form
+    const newErrors = {};
+    if (!formData.name) newErrors.name = 'الرجاء إدخال الاسم';
+    if (!formData.phone || !/^05\d{8}$/.test(formData.phone)) newErrors.phone = 'الرجاء إدخال رقم هاتف صحيح';
+    if (!formData.message) newErrors.message = 'الرجاء إدخال الرسالة';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Format WhatsApp message
+    const message = `السلام عليكم، استفسر بخصوص مشروع 24 حي الزهراء
+
+الاسم: ${formData.name}
+رقم الهاتف: ${formData.phone}
+الرسالة: ${formData.message}`;
+
+    // Open WhatsApp
+    const phoneNumber = '+201101675983';
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div className="bg-white min-h-screen overflow-x-hidden text-slate-900 text-right" dir="rtl">
+      {/* Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="bg-white rounded-lg p-6 w-full max-w-md relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute left-4 top-4 text-slate-500 hover:text-slate-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h2 className="text-xl font-bold mb-4">تواصل مع مستشار المبيعات</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">الاسم</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full p-2 border rounded-lg"
+                />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">رقم الهاتف</label>
+                <input
+                  type="text"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="05XXXXXXXX"
+                />
+                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">الرسالة</label>
+                <textarea
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full p-2 border rounded-lg"
+                  rows={4}
+                />
+                {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-amber-500 text-white py-2 rounded-lg hover:bg-amber-600 transition-colors"
+              >
+                إرسال
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
         <div
@@ -184,6 +273,12 @@ export default function LandingPage() {
             <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
               مشروع سكني فاخر في قلب جدة
             </p>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-amber-500 text-white px-6 py-2 rounded-lg hover:bg-amber-600 transition-colors"
+            >
+              تواصل مع مستشار المبيعات
+            </button>
           </motion.div>
         </div>
       </section>
@@ -257,7 +352,7 @@ export default function LandingPage() {
             toggleExpand={() => toggleSection("features")}
             icon={<Home className="h-5 w-5 text-amber-500" />}
           >
-            <div className="grid grid-cols-1 gap-3 mt-4">
+            <div className="grid grid-cols-1 gap-3 mt-4 transition-all duration-300 ease-in-out">
               {[
                 { icon: <MapPin className="h-5 w-5" />, text: "موقع إستراتيجي قريب من الواجهة البحرية" },
                 { icon: <Building2 className="h-5 w-5" />, text: "قريب من جميع الخدمات" },
@@ -266,9 +361,9 @@ export default function LandingPage() {
                 { icon: <Car className="h-5 w-5" />, text: "مواقف سيارات مخصصة" },
                 { icon: <Wifi className="h-5 w-5" />, text: "سمارت هوم" },
               ].map((feature, index) => (
-                <div key={index} className="flex items-center bg-amber-50 p-3 rounded-lg">
+                <div key={index} className="flex items-center bg-amber-50 p-3 rounded-lg hover:bg-amber-100 transition-colors duration-200">
                   <div className="bg-white p-2 rounded-full ml-3 shadow-sm">{feature.icon}</div>
-                  <span>{feature.text}</span>
+                  <span className="text-sm">{feature.text}</span>
                 </div>
               ))}
             </div>
@@ -281,13 +376,13 @@ export default function LandingPage() {
             toggleExpand={() => toggleSection("location")}
             icon={<MapPin className="h-5 w-5 text-amber-500" />}
           >
-            <div className="mt-4 bg-white p-4 rounded-xl shadow-sm">
+            <div className="mt-4 bg-white p-4 rounded-xl shadow-sm transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-bold mb-3">قريب من:</h3>
               <ul className="space-y-2">
                 {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية"].map((item, index) => (
                   <li key={index} className="flex items-center">
                     <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
-                    {item}
+                    <span className="text-sm">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -297,7 +392,7 @@ export default function LandingPage() {
                 {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
                   <li key={index} className="flex items-center">
                     <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
-                    {item}
+                    <span className="text-sm">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -311,7 +406,7 @@ export default function LandingPage() {
             toggleExpand={() => toggleSection("warranty")}
             icon={<Shield className="h-5 w-5 text-amber-500" />}
           >
-            <div className="grid grid-cols-2 gap-3 mt-4">
+            <div className="grid grid-cols-2 gap-3 mt-4 transition-all duration-300 ease-in-out">
               {[
                 { years: "25", description: "القواطع والأفياش" },
                 { years: "20", description: "الهيكل الإنشائي" },
@@ -320,7 +415,7 @@ export default function LandingPage() {
                 { years: "2", description: "سمارت هوم" },
                 { years: "1", description: "اتحاد ملاك" },
               ].map((warranty, index) => (
-                <div key={index} className="bg-white p-3 rounded-lg text-center shadow-sm">
+                <div key={index} className="bg-white p-3 rounded-lg text-center shadow-sm hover:shadow-md transition-shadow duration-200">
                   <div className="text-2xl font-bold text-amber-500">{warranty.years}</div>
                   <div className="text-xs font-medium">
                     {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
@@ -359,6 +454,11 @@ export default function LandingPage() {
               fill
               className="object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            <div className="absolute bottom-4 right-4 text-white">
+              <p className="text-sm font-medium">فيديو المشروع</p>
+              <p className="text-xs">فيديو توضيحي</p>
+            </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-amber-500 w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
                 <svg
@@ -377,7 +477,6 @@ export default function LandingPage() {
                 </svg>
               </div>
             </div>
-            <div className="absolute inset-0 bg-black/20"></div>
           </motion.div>
         </div>
       </section>
@@ -852,7 +951,7 @@ export default function LandingPage() {
                     type="text"
                     readOnly
                     value={window.location.href}
-                    className="w-full p-2 pl-20 border border-gray-300 rounded-md text-sm text-right"
+                    className="w-full p-2 border border-gray-300 rounded-md text-sm text-right"
                   />
                   <Button
                     className="absolute right-1 top-1 bottom-1 bg-amber-500 hover:bg-amber-600 text-white text-xs px-2"
@@ -898,32 +997,19 @@ export default function LandingPage() {
       <div className="mb-4">
         <button
           onClick={toggleExpand}
-          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all duration-300 ${
-            isExpanded ? "bg-amber-500 text-white shadow-md" : "bg-white shadow-sm"
-          }`}
+          className="w-full flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
         >
           <div className="flex items-center">
             {icon}
-            <h3 className="text-lg font-bold mr-2">{title}</h3>
+            <span className="text-lg font-bold mr-3">{title}</span>
           </div>
-          <ChevronDown
-            className={`h-5 w-5 transition-transform duration-300 ${isExpanded ? "transform rotate-180" : ""}`}
-          />
+          <ChevronDown className={`h-5 w-5 text-amber-500 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
         </button>
-
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <div className="p-4 pt-0">{children}</div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
+        >
+          {children}
+        </div>
       </div>
     )
   }
