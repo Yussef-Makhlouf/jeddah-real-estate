@@ -1,71 +1,12 @@
-"use client"
+"use client";
 import { useEffect } from 'react';
 
 export default function ThankYouPage() {
   useEffect(() => {
-    // Replace entire history with current page
     window.history.replaceState(null, '', window.location.href);
-
-    // Block all navigation attempts
-    const blockNavigation = (e) => {
-      e.preventDefault();
-      e.returnValue = '';
-      alert('لا يمكنك الرجوع إلى الصفحة السابقة أو مغادرة هذه الصفحة');
-      return '';
-    };
-
-    // Handle back/forward navigation
     window.onpopstate = () => {
+      alert('لا يمكنك الرجوع إلى الصفحة السابقة.');
       window.history.replaceState(null, '', window.location.href);
-      alert('لا يمكنك الرجوع إلى الصفحة السابقة');
-    };
-
-    // Handle page refresh or close
-    window.addEventListener('beforeunload', blockNavigation);
-
-    // Handle any link clicks
-    document.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        e.preventDefault();
-        alert('لا يمكنك الانتقال من هذه الصفحة');
-      }
-    });
-
-    // Continuously check and block navigation
-    const navigationCheck = setInterval(() => {
-      if (window.location.pathname !== '/thank-you') {
-        window.history.replaceState(null, '', '/thank-you');
-        alert('لا يمكنك الانتقال من هذه الصفحة');
-      }
-    }, 100);
-
-    // Prevent going back to the homepage
-    window.history.pushState(null, '', window.location.href);
-    window.onpopstate = function () {
-      window.history.pushState(null, '', window.location.href);
-      window.location.href = '/thank-you';
-    };
-
-    return () => {
-      window.removeEventListener('beforeunload', blockNavigation);
-      document.removeEventListener('click', blockNavigation);
-      clearInterval(navigationCheck);
-    };
-  }, []);
-
-  useEffect(() => {
-    window.history.pushState(null, '', window.location.href);
-    window.onpopstate = function () {
-      window.history.pushState(null, '', window.location.href);
-      window.location.href = '/thank-you';
-    };
-  }, []);
-
-  useEffect(() => {
-    window.history.pushState(null, '', window.location.href);
-    window.onpopstate = function () {
-      window.history.pushState(null, '', window.location.href);
-      window.location.href = '/thank-you';
     };
   }, []);
 
