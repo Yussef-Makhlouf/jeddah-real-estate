@@ -53,6 +53,22 @@ export default function ThankYouPage() {
     };
   }, []);
 
+  useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, '', window.location.href);
+      window.location.href = '/thank-you';
+    };
+  }, []);
+
+  useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, '', window.location.href);
+      window.location.href = '/thank-you';
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white">
       <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center">
