@@ -5,7 +5,6 @@ export default function ThankYouPage() {
   useEffect(() => {
     window.history.replaceState(null, '', window.location.href);
     window.onpopstate = () => {
-      alert('لا يمكنك الرجوع إلى الصفحة السابقة.');
       window.history.replaceState(null, '', window.location.href);
     };
   }, []);

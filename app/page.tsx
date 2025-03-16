@@ -149,7 +149,7 @@ export default function LandingPage() {
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate form
@@ -182,6 +182,7 @@ export default function LandingPage() {
     };
 
     // Redirect to thank you page
+    window.history.replaceState(null, '', '/thank-you');
     window.location.href = '/thank-you';
   };
 
