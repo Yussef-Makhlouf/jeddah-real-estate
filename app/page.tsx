@@ -122,6 +122,13 @@ export default function LandingPage() {
     }
   }, [])
 
+  useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, '', window.location.href);
+    };
+  }, []);
+
   const addToRefs = (el: HTMLElement | null, index: number) => {
     if (el && !observerRefs.current.includes(el)) {
       observerRefs.current[index] = el
@@ -142,7 +149,7 @@ export default function LandingPage() {
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate form
@@ -167,6 +174,15 @@ export default function LandingPage() {
     const phoneNumber = '+201101675983';
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
+
+    // Prevent going back to the homepage after form submission
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    // Redirect to thank you page
+    window.location.href = '/thank-you';
   };
 
   return (
