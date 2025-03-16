@@ -3,9 +3,22 @@ import { useEffect } from 'react';
 
 export default function ThankYouPage() {
   useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
     window.history.replaceState(null, '', window.location.href);
     window.onpopstate = () => {
+      window.history.pushState(null, '', window.location.href);
       window.history.replaceState(null, '', window.location.href);
+    };
+  
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 
