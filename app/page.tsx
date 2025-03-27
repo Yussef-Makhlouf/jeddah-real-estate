@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion, AnimatePresence } from "framer-motion"
 import image from "next/image"
+import Link from "next/link"
 
 export default function LandingPage() {
   // Platform detection (would be server-side in production)
@@ -186,6 +187,51 @@ export default function LandingPage() {
     window.location.href = '/thank-you';
   };
 
+  // Model Data
+  const modelData = [
+    {
+      name: 'A',
+      price: '830,000 ريال',
+      area: '150 م²',
+      rooms: 3,
+      bathrooms: 2,
+      floor: 1,
+      location: 'قريب من المطار',
+      description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
+    },
+    {
+      name: 'B',
+      price: '930,000 ريال',
+      area: '190 م²',
+      rooms: 3,
+      bathrooms: 2,
+      floor: 1,
+      location: 'قريب من المطار',
+      description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
+    },
+    {
+      name: 'C',
+      price: '830,000 ريال',
+      area: '150 م²',
+      rooms: 3,
+      bathrooms: 2,
+      floor: 1,
+      location: 'قريب من المطار',
+      description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
+    },
+    {
+      name: 'D',
+      price: '830,000 ريال',
+      area: '220 م²',
+      areaDetails: 'مساحة المباني ١٨٠ متر ومساحة السطح ٤٠ متر',
+      rooms: 3,
+      bathrooms: 2,
+      floor: 1,
+      location: 'قريب من المطار',
+      description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
+    }
+  ];
+
   return (
     <div className="bg-white min-h-screen overflow-x-hidden text-slate-900 text-right" dir="rtl">
       {/* Modal */}
@@ -286,9 +332,11 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
             className="text-center space-y-6"
           >
-            <h1 className="text-4xl md:text-5xl font-bold">مشروع 24</h1>
-            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
-              مشروع سكني فاخر في قلب جدة
+            <h1 className="text-4xl md:text-5xl font-bold">امتلك منزل العمر في جدة </h1>
+            <h2 className="text-lg md:text-xl text-black max-w-2xl mx-auto">
+            مشروع 24-حي الزهراء            </h2>
+            <p className="text-lg md:text-xl text-black max-w-2xl mx-auto">
+            بأسعار تبدأ من 830,0000 ريال فقط
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
@@ -314,7 +362,9 @@ export default function LandingPage() {
             </div>
             <div className="bg-amber-50 p-3 rounded-xl text-center">
               <div className="text-amber-500 font-bold text-xl md:text-2xl">25</div>
-              <div className="text-xs md:text-sm">سنة ضمان</div>
+              <div className="text-xs font-medium">
+                سنة ضمان
+              </div>
             </div>
           </div>
         </div>
@@ -358,90 +408,109 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
       {/* Expandable Sections */}
       <section className="py-8 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4">
-          {/* Project Features */}
-          <ExpandableSection
-            title="مميزات المشروع"
-            isExpanded={expandedSection === "features"}
-            toggleExpand={() => toggleSection("features")}
-            icon={<Home className="h-5 w-5 text-amber-500" />}
-          >
-            <div className="grid grid-cols-1 gap-3 mt-4 transition-all duration-300 ease-in-out">
-              {[
-                { icon: <MapPin className="h-5 w-5" />, text: "موقع إستراتيجي قريب من الواجهة البحرية" },
-                { icon: <Building2 className="h-5 w-5" />, text: "قريب من جميع الخدمات" },
-                { icon: <Shield className="h-5 w-5" />, text: "ضمانات تصل إلى 25 سنة" },
-                { icon: <Home className="h-5 w-5" />, text: "مساحات تصل إلى 220م²" },
-                { icon: <Car className="h-5 w-5" />, text: "مواقف سيارات مخصصة" },
-                { icon: <Wifi className="h-5 w-5" />, text: "سمارت هوم" },
-              ].map((feature, index) => (
-                <div key={index} className="flex items-center bg-amber-50 p-3 rounded-lg hover:bg-amber-100 transition-colors duration-200">
-                  <div className="bg-white p-2 rounded-full ml-3 shadow-sm">{feature.icon}</div>
-                  <span className="text-sm">{feature.text}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Features Card */}
+            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
+              <div className="flex items-center mb-6">
+                <Home className="h-8 w-8 text-amber-500" />
+                <h3 className="text-xl font-bold mr-3">مميزات المشروع</h3>
+              </div>
+              <ul className="space-y-3 flex-grow">
+                {[
+                  "موقع إستراتيجي قريب من الواجهة البحرية",
+                  "قريب من جميع الخدمات",
+                  "ضمانات تصل إلى 25 سنة",
+                  "مساحات تصل إلى 220م²",
+                  "مواقف سيارات مخصصة",
+                  "سمارت هوم"
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-center p-3 bg-amber-50 rounded-lg">
+                    <Check className="h-5 w-5 text-amber-500 ml-2" />
+                    <span className="text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+              >
+                احجز شقتك الان
+              </button>
+            </div>
+
+            {/* Location Card */}
+            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
+              <div className="flex items-center mb-6">
+                <MapPin className="h-8 w-8 text-amber-500" />
+                <h3 className="text-xl font-bold mr-3">مميزات الموقع</h3>
+              </div>
+              <div className="space-y-4 flex-grow">
+                <div className="bg-amber-50 p-4 rounded-lg">
+                  <h4 className="font-medium mb-3">قريب من:</h4>
+                  <ul className="space-y-2">
+                    {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية"].map((item, index) => (
+                      <li key={index} className="flex items-center">
+                        <Check className="h-5 w-5 text-amber-500 ml-2" />
+                        <span className="text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
+                <div className="bg-amber-50 p-4 rounded-lg">
+                  <h4 className="font-medium mb-3">دقائق من:</h4>
+                  <ul className="space-y-2">
+                    {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
+                      <li key={index} className="flex items-center">
+                        <Check className="h-5 w-5 text-amber-500 ml-2" />
+                        <span className="text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+              >
+                احجز شقتك الان
+              </button>
             </div>
-          </ExpandableSection>
 
-          {/* Location Advantages */}
-          <ExpandableSection
-            title="مميزات الموقع"
-            isExpanded={expandedSection === "location"}
-            toggleExpand={() => toggleSection("location")}
-            icon={<MapPin className="h-5 w-5 text-amber-500" />}
-          >
-            <div className="mt-4 bg-white p-4 rounded-xl shadow-sm transition-all duration-300 ease-in-out">
-              <h3 className="text-lg font-bold mb-3">قريب من:</h3>
-              <ul className="space-y-2">
-                {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
-                    <span className="text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <h3 className="text-lg font-bold mt-4 mb-3">دقائق من:</h3>
-              <ul className="space-y-2">
-                {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
-                    <span className="text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ExpandableSection>
-
-          {/* Warranty Information */}
-          <ExpandableSection
-            title="ضمانات المشروع"
-            isExpanded={expandedSection === "warranty"}
-            toggleExpand={() => toggleSection("warranty")}
-            icon={<Shield className="h-5 w-5 text-amber-500" />}
-          >
-            <div className="grid grid-cols-2 gap-3 mt-4 transition-all duration-300 ease-in-out">
-              {[
-                { years: "25", description: "القواطع والأفياش" },
-                { years: "20", description: "الهيكل الإنشائي" },
-                { years: "5", description: "المصاعد" },
-                { years: "2", description: "أعمال السباكة والكهرباء" },
-                { years: "2", description: "سمارت هوم" },
-                { years: "1", description: "اتحاد ملاك" },
-              ].map((warranty, index) => (
-                <div key={index} className="bg-white p-3 rounded-lg text-center shadow-sm hover:shadow-md transition-shadow duration-200">
-                  <div className="text-2xl font-bold text-amber-500">{warranty.years}</div>
-                  <div className="text-xs font-medium">
-                    {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
+            {/* Warranty Card */}
+            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
+              <div className="flex items-center mb-6">
+                <Shield className="h-8 w-8 text-amber-500" />
+                <h3 className="text-xl font-bold mr-3">ضمانات المشروع</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-3 flex-grow">
+                {[
+                  { years: "25", description: "القواطع والأفياش" },
+                  { years: "20", description: "الهيكل الإنشائي" },
+                  { years: "5", description: "المصاعد" },
+                  { years: "2", description: "أعمال السباكة والكهرباء" },
+                  { years: "2", description: "سمارت هوم" },
+                  { years: "1", description: "اتحاد ملاك" }
+                ].map((warranty, index) => (
+                  <div key={index} className="p-3 bg-amber-50 rounded-lg flex flex-col justify-center">
+                    <div className="text-xl font-bold text-amber-500">{warranty.years}</div>
+                    <div className="text-xs font-medium">
+                      {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
+                    </div>
+                    <div className="text-sm mt-1">{warranty.description}</div>
                   </div>
-                  <div className="text-sm mt-1">{warranty.description}</div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+              >
+                احجز شقتك الان
+              </button>
             </div>
-          </ExpandableSection>
+          </div>
         </div>
       </section>
 
@@ -466,7 +535,7 @@ export default function LandingPage() {
             onClick={() => setVideoModalOpen(true)}
           >
             <Image
-              src="/placeholder.svg?height=720&width=1280&text=فيديو المشروع"
+              src="/1.jpg"
               alt="فيديو المشروع"
               fill
               className="object-cover"
@@ -545,7 +614,7 @@ export default function LandingPage() {
                       roofArea={156}
                       rooms={4}
                       bathrooms={4}
-                      price="775,000"
+                      price="830,000"
                       features={[
                         "غرفة خادمة",
                         "غرفة سائق",
@@ -576,11 +645,11 @@ export default function LandingPage() {
                       title="نموذج B"
                       image="/b.jpg"
                       subtitle="خلفية شرقي شمالي غربي"
-                      area={195}
-                      roofArea={195}
+                      area={190}
+                      roofArea={190}
                       rooms={5}
                       bathrooms={4}
-                      price="885,000"
+                      price="930,000"
                       features={[
                         "غرفة خادمة",
                         "غرفة سائق",
@@ -610,12 +679,13 @@ export default function LandingPage() {
                     <MobileModelCard
                       title="نموذج C"
                       image="/c.jpg"
+                      
                       subtitle="واجهة جنوبية غربية"
                       area={156}
                       roofArea={0}
                       rooms={4}
                       bathrooms={4}
-                      price="775,000"
+                      price="830,000"
                       features={[
                         "غرفة خادمة",
                         "غرفة سائق",
@@ -646,7 +716,7 @@ export default function LandingPage() {
                       title="نموذج D"
                       image="/a.jpg"
                       subtitle="ملحق شرقي شمالي"
-                      area={220}
+                      area={180}
                       roofArea={40}
                       rooms={5}
                       bathrooms={5}
@@ -664,6 +734,7 @@ export default function LandingPage() {
                         "موقف خاص",
                         "مصعد",
                         "كاميرات مراقبة",
+                        "اجمالي المساحه 220 متر"
                       ]}
                       onInquire={handleInquire}
                     />
@@ -714,50 +785,70 @@ export default function LandingPage() {
       <section className="py-24 md:py-40 bg-slate-50">
         <div className="container mx-auto px-4">
           {/* Model Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {['A', 'B', 'C', 'D'].map((model, index) => (
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {modelData.map((model, index) => (
               <button
-                key={model}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors  ${selectedModel === index ? 'bg-amber-500 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
-                onClick={() => {
-                  console.log('Model selected:', index);
-                  setSelectedModel(index);
-                }}
+                key={model.name}
+                className={`px-8 py-3 rounded-full text-base font-semibold transition-all transform hover:scale-105 ${selectedModel === index ? 'bg-amber-500 text-white shadow-lg' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-md'}`}
+                onClick={() => setSelectedModel(index)}
               >
-                النموذج {model}
+                النموذج {model.name}
               </button>
             ))}
           </div>
 
           {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8" >
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12">
             {/* Information Panel */}
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h3 className="text-xl font-bold mb-4">معلومات النموذج</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-slate-600">المساحة:</span>
-                  <span className="font-medium text-right">150 م²</span>
+            <div className="bg-white p-8 rounded-2xl shadow-xl h-full">
+              <h3 className="text-2xl font-bold mb-6 text-slate-800">معلومات النموذج</h3>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
+                  <span className="text-slate-600 mb-2">المساحة</span>
+                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].area}</span>
+                  {modelData[selectedModel].areaDetails && (
+                    <span className="text-sm text-slate-500 mt-1">{modelData[selectedModel].areaDetails}</span>
+                  )}
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-600">الغرف:</span>
-                  <span className="font-medium text-right">3</span>
+                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
+                  <span className="text-slate-600 mb-2">السعر</span>
+                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].price}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-600">دورات المياه:</span>
-                  <span className="font-medium text-right">2</span>
+                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
+                  <span className="text-slate-600 mb-2">الغرف</span>
+                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].rooms}</span>
+                  <span className="text-sm text-slate-500 mt-1">غرف نوم</span>
                 </div>
+                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
+                  <span className="text-slate-600 mb-2">دورات المياه</span>
+                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].bathrooms}</span>
+                  <span className="text-sm text-slate-500 mt-1">حمامات حديثة</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
+                  <span className="text-slate-600 mb-2">الطابق</span>
+                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].floor}</span>
+                  <span className="text-sm text-slate-500 mt-1">طابق أرضي</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
+                  <span className="text-slate-600 mb-2">الموقع</span>
+                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].location}</span>
+                </div>
+              </div>
+              <div className="mt-6 p-4 bg-amber-50 rounded-lg">
+                <p className="text-slate-700 text-sm leading-relaxed">
+                  {modelData[selectedModel].description}
+                </p>
               </div>
             </div>
 
             {/* Main Image */}
-            <div className="relative aspect-square lg:h-[600px] bg-slate-100 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="relative aspect-square lg:h-[700px] bg-slate-100 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
               <Image
                 src={`/plans/model-${selectedModel + 1}.jpg`}
                 alt={`مخطط النموذج ${selectedModel + 1}`}
                 fill
-                className="object-cover p-4 hover:scale-105 transition-transform duration-300"
-                quality={90}
+                className="object-cover p-6 hover:scale-110 transition-transform duration-500"
+                quality={100}
                 priority={true}
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
@@ -867,11 +958,12 @@ export default function LandingPage() {
               </button>
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                title="فيديو المشروع"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                src="https://www.youtube.com/embed/l9cH8RJQnYg"
+                title="امتلك شقتك الآن في مدينة جدة - حي الزهراء"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
+
               ></iframe>
             </motion.div>
           </motion.div>
@@ -904,7 +996,7 @@ export default function LandingPage() {
                   {[
                     { 
                       name: "واتساب", 
-                      color: "#25D366", 
+                      color: "#c48765", 
                       icon: "whatsapp.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة\n\nاستفسر الآن عن مشروع 24 في حي الزهراء\n" + window.location.href);
@@ -913,7 +1005,7 @@ export default function LandingPage() {
                     },
                     { 
                       name: "تويتر", 
-                      color: "#1DA1F2", 
+                      color: "#d68c3c", 
                       icon: "twitter.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة");
@@ -922,7 +1014,7 @@ export default function LandingPage() {
                     },
                     { 
                       name: "فيسبوك", 
-                      color: "#1877F2", 
+                      color: "#34222e", 
                       icon: "facebook.svg",
                       action: () => {
                         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, "_blank");
@@ -930,7 +1022,7 @@ export default function LandingPage() {
                     },
                     { 
                       name: "تلجرام", 
-                      color: "#0088cc", 
+                      color: "#1d0728", 
                       icon: "telegram.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة");
