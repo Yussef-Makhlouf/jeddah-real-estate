@@ -288,7 +288,7 @@ export default function LandingPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-amber-500 text-white py-2 rounded-lg hover:bg-amber-600 transition-colors"
+                className="w-full bg-[#c48765] text-white py-2 rounded-lg hover:bg-[#ca8a04] transition-colors"
               >
                 إرسال
               </button>
@@ -301,7 +301,7 @@ export default function LandingPage() {
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
         <div
-          className="h-full bg-gradient-to-r from-amber-400 to-amber-600"
+          className="h-full bg-gradient-to-r from-amber-400 to-[#ca8a04]"
           style={{ width: `${scrollProgress}%` }}
         ></div>
       </div>
@@ -322,7 +322,7 @@ export default function LandingPage() {
         className="fixed top-3 right-3 z-40 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-md"
         aria-label="مشاركة"
       >
-        <Share2 className="h-5 w-5 text-amber-500" />
+        <Share2 className="h-5 w-5 text-[#c48765]" />
       </button>
 
       {/* Hero Section */}
@@ -335,13 +335,13 @@ export default function LandingPage() {
       <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
         مشروع 24-حي الزهراء
       </h2>
-      <p className="text-2xl md:text-3xl text-amber-600 font-bold">
+      <p className="text-2xl md:text-3xl text-[#ca8a04] font-bold">
         بأسعار تبدأ من 830,000 ريال فقط
       </p>
     </div>
 
     <div className="max-w-2xl mx-auto">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 border border-amber-100">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]">
         <div className="text-center mb-8">
           <h3 className="text-3xl font-bold text-amber-800 mb-2">
             نموذج التواصل
@@ -375,7 +375,7 @@ export default function LandingPage() {
                 placeholder="05XXXXXXXX"
               />
               <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
@@ -397,7 +397,7 @@ export default function LandingPage() {
 
           <button
             type="submit"
-            className="w-full bg-amber-600 text-white py-4 rounded-2xl text-xl font-medium"
+            className="w-full bg-[#1d0728] text-white py-4 rounded-2xl text-xl font-medium"
           >
             تواصل مع مستشار المبيعات
           </button>
@@ -415,15 +415,15 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-3 gap-2 text-right">
             <div className="bg-amber-50 p-3 rounded-xl text-center">
-              <div className="text-amber-500 font-bold text-xl md:text-2xl">156+</div>
+              <div className="text-[#c48765] font-bold text-xl md:text-2xl">156+</div>
               <div className="text-xs md:text-sm">م² مساحة</div>
             </div>
             <div className="bg-amber-50 p-3 rounded-xl text-center">
-              <div className="text-amber-500 font-bold text-xl md:text-2xl">4-5</div>
+              <div className="text-[#c48765] font-bold text-xl md:text-2xl">4-5</div>
               <div className="text-xs md:text-sm">غرف</div>
             </div>
             <div className="bg-amber-50 p-3 rounded-xl text-center">
-              <div className="text-amber-500 font-bold text-xl md:text-2xl">25</div>
+              <div className="text-[#c48765] font-bold text-xl md:text-2xl">25</div>
               <div className="text-xs font-medium">
                 سنة ضمان
               </div>
@@ -442,7 +442,7 @@ export default function LandingPage() {
             className="text-center mb-6"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-center">صور المشروع</h2>
-            <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
+            <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
           </motion.div>
 
           <div className="relative">
@@ -481,7 +481,7 @@ export default function LandingPage() {
                   }
                 }}
               >
-                <ChevronDown className="h-6 w-6 -rotate-90 text-amber-500" />
+                <ChevronDown className="h-6 w-6 -rotate-90 text-[#c48765]" />
               </button>
               <button 
                 className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
@@ -492,7 +492,7 @@ export default function LandingPage() {
                   }
                 }}
               >
-                <ChevronDown className="h-6 w-6 rotate-90 text-amber-500" />
+                <ChevronDown className="h-6 w-6 rotate-90 text-[#c48765]" />
               </button>
             </div>
 
@@ -501,7 +501,7 @@ export default function LandingPage() {
               {[1, 2, 3].map((_, index) => (
                 <div
                   key={index}
-                  className="w-2 h-2 rounded-full bg-amber-500/50"
+                  className="w-2 h-2 rounded-full bg-[#c48765]/50"
                 />
               ))}
             </div>
@@ -515,7 +515,7 @@ export default function LandingPage() {
             {/* Features Card */}
             <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
               <div className="flex items-center mb-6">
-                <Home className="h-8 w-8 text-amber-500" />
+                <Home className="h-8 w-8 text-[#c48765]" />
                 <h3 className="text-xl font-bold mr-3">مميزات المشروع</h3>
               </div>
               <ul className="space-y-3 flex-grow">
@@ -528,14 +528,14 @@ export default function LandingPage() {
                   "سمارت هوم"
                 ].map((feature, index) => (
                   <li key={index} className="flex items-center p-3 bg-amber-50 rounded-lg">
-                    <Check className="h-5 w-5 text-amber-500 ml-2" />
+                    <Check className="h-5 w-5 text-[#c48765] ml-2" />
                     <span className="text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+                className="mt-6 w-full bg-[#c48765] text-white px-4 py-3 rounded-lg hover:bg-[#ca8a04] transition-colors duration-200"
               >
                 احجز شقتك الان
               </button>
@@ -547,7 +547,7 @@ export default function LandingPage() {
 
 <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col min-h-[600px]">
   <div className="flex items-center mb-6">
-    <MapPin className="h-8 w-8 text-amber-500" />
+    <MapPin className="h-8 w-8 text-[#c48765]" />
     <h3 className="text-xl font-bold mr-3">مميزات الموقع</h3>
   </div>
   <div className="space-y-4 flex-grow">
@@ -566,7 +566,7 @@ export default function LandingPage() {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
       <div className="absolute inset-0 flex items-center justify-center group">
-        <div className="bg-amber-500 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110">
+        <div className="bg-[#c48765] w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -591,7 +591,7 @@ export default function LandingPage() {
         <ul className="space-y-2">
           {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية", "المطار"].map((item, index) => (
             <li key={index} className="flex items-center">
-              <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
+              <Check className="h-5 w-5 text-[#c48765] ml-2 flex-shrink-0" />
               <span className="text-sm">{item}</span>
             </li>
           ))}
@@ -602,7 +602,7 @@ export default function LandingPage() {
         <ul className="space-y-2">
           {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
             <li key={index} className="flex items-center">
-              <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
+              <Check className="h-5 w-5 text-[#c48765] ml-2 flex-shrink-0" />
               <span className="text-sm">{item}</span>
             </li>
           ))}
@@ -612,7 +612,7 @@ export default function LandingPage() {
   </div>
   <button
     onClick={() => setIsModalOpen(true)}
-    className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+    className="mt-6 w-full bg-[#c48765] text-white px-4 py-3 rounded-lg hover:bg-[#ca8a04] transition-colors duration-200"
   >
     احجز شقتك الان
   </button>
@@ -622,7 +622,7 @@ export default function LandingPage() {
             {/* Warranty Card */}
             <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
               <div className="flex items-center mb-6">
-                <Shield className="h-8 w-8 text-amber-500" />
+                <Shield className="h-8 w-8 text-[#c48765]" />
                 <h3 className="text-xl font-bold mr-3">ضمانات المشروع</h3>
               </div>
               <div className="grid grid-cols-2 gap-3 flex-grow">
@@ -635,7 +635,7 @@ export default function LandingPage() {
                   { years: "1", description: "اتحاد ملاك" }
                 ].map((warranty, index) => (
                   <div key={index} className="p-3 bg-amber-50 rounded-lg flex flex-col justify-center">
-                    <div className="text-xl font-bold text-amber-500">{warranty.years}</div>
+                    <div className="text-xl font-bold text-[#c48765]">{warranty.years}</div>
                     <div className="text-xs font-medium">
                       {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
                     </div>
@@ -645,7 +645,7 @@ export default function LandingPage() {
               </div>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+                className="mt-6 w-full bg-[#c48765] text-white px-4 py-3 rounded-lg hover:bg-[#ca8a04] transition-colors duration-200"
               >
                 احجز شقتك الان
               </button>
@@ -664,7 +664,7 @@ export default function LandingPage() {
             className="text-center mb-6"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-center">فيديو المشروع</h2>
-            <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
+            <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
           </motion.div>
 
           <motion.div
@@ -686,7 +686,7 @@ export default function LandingPage() {
               <p className="text-xs">فيديو توضيحي</p>
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-amber-500 w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
+              <div className="bg-[#c48765] w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -717,7 +717,7 @@ export default function LandingPage() {
             className="text-center mb-6"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-center">نماذج المشروع</h2>
-            <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
+            <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
           </motion.div>
 
           <motion.div
@@ -731,7 +731,7 @@ export default function LandingPage() {
                   <TabsTrigger
                     key={index}
                     value={`model-${model.toLowerCase()}`}
-                    className="rounded-full data-[state=active]:bg-amber-500 data-[state=active]:text-white py-2"
+                    className="rounded-full data-[state=active]:bg-[#c48765] data-[state=active]:text-white py-2"
                   >
                     {model}
                   </TabsTrigger>
@@ -896,7 +896,7 @@ export default function LandingPage() {
             {modelData.map((model, index) => (
               <button
                 key={model.name}
-                className={`px-8 py-3 rounded-full text-base font-semibold transition-all transform hover:scale-105 ${selectedModel === index ? 'bg-amber-500 text-white shadow-lg' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-md'}`}
+                className={`px-8 py-3 rounded-full text-base font-semibold transition-all transform hover:scale-105 ${selectedModel === index ? 'bg-[#c48765] text-white shadow-lg' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-md'}`}
                 onClick={() => setSelectedModel(index)}
               >
                 النموذج {model.name}
@@ -974,7 +974,7 @@ export default function LandingPage() {
             className="text-center mb-6"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-center">موقع المشروع</h2>
-            <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
+            <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
           </motion.div>
 
           <motion.div
@@ -1007,14 +1007,14 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
           >
             <Card className="border-none shadow-xl overflow-hidden py-12">
-              <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-4 text-white text-center">
+              <div className="bg-gradient-to-r from-[#c48765] to-[#ca8a04] p-4 text-white text-center">
                 <h2 className="text-xl font-bold mb-1">احجز وحدتك الآن</h2>
                 <p className="text-sm">سارع بالحجز قبل نفاذ الوحدات المتاحة</p>
               </div>
               <CardContent className="p-4 bg-white">
                 <Button
                   onClick={() => openWhatsApp()}
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-3 rounded-full shadow-lg"
+                  className="w-full bg-gradient-to-r from-[#c48765] to-[#ca8a04] hover:from-[#ca8a04] hover:to-[#34222e] text-white py-3 rounded-full shadow-lg"
                 >
                   تواصل معنا الآن
                 </Button>
@@ -1023,7 +1023,7 @@ export default function LandingPage() {
 
                 <a
                   href="tel:0536667967"
-                  className="flex items-center justify-center gap-2 mt-2 p-3 border border-amber-200 rounded-md text-amber-600 font-medium"
+                  className="flex items-center justify-center gap-2 mt-2 p-3 border border-[#1d0728] rounded-md text-[#ca8a04] font-medium"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1059,11 +1059,11 @@ export default function LandingPage() {
             <div className="container mx-auto flex items-center justify-between">
               <div>
                 <div className="text-sm font-bold">السعر يبدأ من</div>
-                <div className="text-lg font-bold text-amber-500">775,000 ﷼</div>
+                <div className="text-lg font-bold text-[#c48765]">775,000 ﷼</div>
               </div>
               <Button
                 onClick={() => openWhatsApp()}
-                className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white px-6 py-2 rounded-full shadow-md"
+                className="bg-gradient-to-r from-[#c48765] to-[#ca8a04] hover:from-[#34222e] hover:to-[#1d0728] text-white px-6 py-2 rounded-full shadow-md"
               >
                 احجز الآن
               </Button>
@@ -1127,7 +1127,7 @@ export default function LandingPage() {
               className="relative w-full max-w-sm bg-white rounded-xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-4 text-white">
+              <div className="bg-gradient-to-r from-[#c48765] to-[#ca8a04] p-4 text-white">
                 <h3 className="text-lg font-bold text-center">مشاركة المشروع</h3>
                 <p className="text-sm text-center">شارك المشروع مع أصدقائك وعائلتك</p>
               </div>
@@ -1203,7 +1203,7 @@ export default function LandingPage() {
                     className="w-full p-2 border border-gray-300 rounded-md text-sm text-right"
                   />
                   <Button
-                    className="absolute right-1 top-1 bottom-1 bg-amber-500 hover:bg-amber-600 text-white text-xs px-2"
+                    className="absolute right-1 top-1 bottom-1 bg-[#c48765] hover:bg-[#ca8a04] text-white text-xs px-2"
                     onClick={() => {
                       navigator.clipboard.writeText(window.location.href);
                       alert("تم نسخ الرابط");
@@ -1246,13 +1246,13 @@ export default function LandingPage() {
       <div className="mb-4">
         <button
           onClick={toggleExpand}
-          className="w-full flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className="w-full flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-[#c48765]"
         >
           <div className="flex items-center">
             {icon}
             <span className="text-lg font-bold mr-3">{title}</span>
           </div>
-          <ChevronDown className={`h-5 w-5 text-amber-500 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`h-5 w-5 text-[#c48765] transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
         </button>
         <div
           className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
@@ -1303,7 +1303,7 @@ export default function LandingPage() {
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-            <div className="absolute top-4 right-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">
+            <div className="absolute top-4 right-4 bg-[#ca8a04] text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">
               {price}
             </div>
           </div>
@@ -1316,28 +1316,28 @@ export default function LandingPage() {
 
             <div className="grid grid-cols-2 gap-4" dir="rtl">
               <div className="flex items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
-                <Home className="h-6 w-6 text-amber-500 ml-2" />
+                <Home className="h-6 w-6 text-[#c48765] ml-2" />
                 <div>
                   <div className="text-xs text-slate-500">المساحة</div>
                   <div className="text-sm font-semibold text-slate-800">{area} م²</div>
                 </div>
               </div>
               <div className="flex items-center bg-slate-50 p-3 rounded-lg border border-slate-100" dir="rtl">
-                <Building2 className="h-6 w-6 text-amber-500 ml-2" />
+                <Building2 className="h-6 w-6 text-[#c48765] ml-2" />
                 <div>
                   <div className="text-xs font-bold text-slate-500">مساحة السطح</div>
                   <div className="text-sm font-semibold text-slate-800">{roofArea} م²</div>
                 </div>
               </div>
               <div className="flex items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
-                <Home className="h-6 w-6 text-amber-500 ml-2" />
+                <Home className="h-6 w-6 text-[#c48765] ml-2" />
                 <div>
                   <div className="text-xs text-slate-500">الغرف</div>
                   <div className="text-sm font-semibold text-slate-800">{rooms}</div>
                 </div>
               </div>
               <div className="flex items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
-                <Shield className="h-6 w-6 text-amber-500 ml-2" />
+                <Shield className="h-6 w-6 text-[#c48765] ml-2" />
                 <div>
                   <div className="text-xs text-slate-500">دورات المياه</div>
                   <div className="text-sm font-semibold text-slate-800">{bathrooms}</div>
@@ -1350,7 +1350,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-2 gap-3">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center text-sm bg-amber-50 p-3 rounded-lg border border-amber-100 hover:bg-amber-100 transition-colors duration-200" dir="rtl">
-                <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
+                <Check className="h-5 w-5 text-[#c48765] ml-2 flex-shrink-0" />
                 <span className="text-slate-700">{feature}</span>
               </div>
             ))}
@@ -1359,11 +1359,11 @@ export default function LandingPage() {
           <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-100">
             <div>
               <div className="text-xs text-slate-500">السعر يبدأ من</div>
-              <div className="text-xl font-bold text-amber-600">{price} ريال</div>
+              <div className="text-xl font-bold text-[#ca8a04]">{price} ريال</div>
             </div>
             <Button
               size="sm"
-              className="bg-amber-500 hover:bg-amber-600 text-white px-6"
+              className="bg-[#c48765] hover:bg-[#ca8a04] text-white px-6"
               onClick={() => onInquire(title)}
             >
               استفسار عبر واتساب
