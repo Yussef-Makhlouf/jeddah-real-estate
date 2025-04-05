@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion, AnimatePresence } from "framer-motion"
 import image from "next/image"
 import Link from "next/link"
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 export default function LandingPage() {
   // Platform detection (would be server-side in production)
@@ -296,6 +297,7 @@ export default function LandingPage() {
         </div>
       )}
 
+
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
         <div
@@ -324,32 +326,92 @@ export default function LandingPage() {
       </button>
 
       {/* Hero Section */}
-      <section className="py-20 md:py-32">
-        <div className="container mx-auto px-4 space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible[0] ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center space-y-6"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold">امتلك منزل العمر في جدة </h1>
-            <h2 className="text-lg md:text-xl text-black max-w-2xl mx-auto">
-            مشروع 24-حي الزهراء            </h2>
-            <p className="text-lg md:text-xl text-black max-w-2xl mx-auto">
-            بأسعار تبدأ من 830,0000 ريال فقط
-            </p>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-amber-500 text-white px-6 py-2 rounded-lg hover:bg-amber-600 transition-colors"
-            >
-              تواصل مع مستشار المبيعات
-            </button>
-          </motion.div>
-        </div>
-      </section>
+<section className="relative bg-gradient-to-b from-amber-50/50 to-white py-32 overflow-hidden">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16 max-w-3xl mx-auto">
+      <h1 className="text-5xl md:text-6xl font-bold text-amber-800 mb-6">
+        امتلك منزل العمر في جدة
+      </h1>
+      <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
+        مشروع 24-حي الزهراء
+      </h2>
+      <p className="text-2xl md:text-3xl text-amber-600 font-bold">
+        بأسعار تبدأ من 830,000 ريال فقط
+      </p>
+    </div>
 
+    <div className="max-w-2xl mx-auto">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 border border-amber-100">
+        <div className="text-center mb-8">
+          <h3 className="text-3xl font-bold text-amber-800 mb-2">
+            نموذج التواصل
+          </h3>
+          <p className="text-slate-600">
+            املأ النموذج وسيقوم مستشارنا العقاري بالتواصل معك
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="block text-lg font-medium text-slate-700">الاسم</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full p-4 text-lg border-2 rounded-2xl bg-slate-50/50"
+              placeholder="الاسم الكامل"
+            />
+            {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-lg font-medium text-slate-700">رقم الهاتف</label>
+            <div className="relative">
+              <input
+                type="text"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full p-4 text-lg border-2 rounded-2xl bg-slate-50/50"
+                placeholder="05XXXXXXXX"
+              />
+              <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+            </div>
+            {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-lg font-medium text-slate-700">الرسالة</label>
+            <textarea
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              className="w-full p-4 text-lg border-2 rounded-2xl bg-slate-50/50 resize-none"
+              rows={4}
+              placeholder="اكتب رسالتك هنا"
+            />
+            {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-amber-600 text-white py-4 rounded-2xl text-xl font-medium"
+          >
+            تواصل مع مستشار المبيعات
+          </button>
+
+          <p className="text-center text-slate-500 mt-6">
+            سيتم الرد عليك في أقرب وقت ممكن
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
       {/* Quick Stats */}
-      <section className="py-8 bg-white">
+      {/* <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-3 gap-2 text-right">
             <div className="bg-amber-50 p-3 rounded-xl text-center">
@@ -368,7 +430,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Project Images */}
       <section ref={(el) => addToRefs(el, 0)} className="py-10 bg-white">
@@ -383,28 +445,66 @@ export default function LandingPage() {
             <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item, index) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isVisible[0] ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+          <div className="relative">
+            <div className="flex overflow-x-auto pb-6 gap-6 snap-x snap-mandatory scrollbar-hide">
+              {[1, 2, 3, 4, 5].map((item, index) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isVisible[0] ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative aspect-square w-[300px] md:w-[400px] lg:w-[500px] flex-none snap-center rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <Image
+                    src={`/${item}.jpg`}
+                    alt={`صورة المشروع ${item}`}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                  <div className="absolute bottom-4 right-4 text-white">
+                    <p className="text-sm md:text-base font-medium">صورة المشروع</p>
+                    <p className="text-xs md:text-sm">منظر خارجي</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Navigation arrows for larger screens */}
+            <div className="hidden md:block">
+              <button 
+                className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+                onClick={() => {
+                  const container = document.querySelector('.overflow-x-auto');
+                  if (container) {
+                    container.scrollBy({ left: -400, behavior: 'smooth' });
+                  }
+                }}
               >
-                <Image
-                  src={`/${item}.jpg`}
-                  alt={`صورة المشروع ${item}`}
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-300"
+                <ChevronDown className="h-6 w-6 -rotate-90 text-amber-500" />
+              </button>
+              <button 
+                className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+                onClick={() => {
+                  const container = document.querySelector('.overflow-x-auto');
+                  if (container) {
+                    container.scrollBy({ left: 400, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronDown className="h-6 w-6 rotate-90 text-amber-500" />
+              </button>
+            </div>
+
+            {/* Scroll indicator dots */}
+            <div className="flex justify-center gap-2 mt-4">
+              {[1, 2, 3].map((_, index) => (
+                <div
+                  key={index}
+                  className="w-2 h-2 rounded-full bg-amber-500/50"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div className="absolute bottom-4 right-4 text-white">
-                  <p className="text-sm font-medium">صورة المشروع</p>
-                  <p className="text-xs">منظر خارجي</p>
-                </div>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -441,43 +541,83 @@ export default function LandingPage() {
               </button>
             </div>
 
-            {/* Location Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
-              <div className="flex items-center mb-6">
-                <MapPin className="h-8 w-8 text-amber-500" />
-                <h3 className="text-xl font-bold mr-3">مميزات الموقع</h3>
-              </div>
-              <div className="space-y-4 flex-grow">
-                <div className="bg-amber-50 p-4 rounded-lg">
-                  <h4 className="font-medium mb-3">قريب من:</h4>
-                  <ul className="space-y-2">
-                    {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية"].map((item, index) => (
-                      <li key={index} className="flex items-center">
-                        <Check className="h-5 w-5 text-amber-500 ml-2" />
-                        <span className="text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-amber-50 p-4 rounded-lg">
-                  <h4 className="font-medium mb-3">دقائق من:</h4>
-                  <ul className="space-y-2">
-                    {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
-                      <li key={index} className="flex items-center">
-                        <Check className="h-5 w-5 text-amber-500 ml-2" />
-                        <span className="text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
-              >
-                احجز شقتك الان
-              </button>
-            </div>
+
+
+{/* Location Card */}
+
+<div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col min-h-[600px]">
+  <div className="flex items-center mb-6">
+    <MapPin className="h-8 w-8 text-amber-500" />
+    <h3 className="text-xl font-bold mr-3">مميزات الموقع</h3>
+  </div>
+  <div className="space-y-4 flex-grow">
+    {/* Video Preview with better responsive design */}
+    <div 
+      className="relative w-full aspect-video bg-slate-200 rounded-lg overflow-hidden shadow-lg cursor-pointer mb-6"
+      onClick={() => setVideoModalOpen(true)}
+    >
+      <Image
+        src="/1.jpg"
+        alt="فيديو المشروع"
+        fill
+        className="object-cover transition-transform duration-300 hover:scale-105"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        priority
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+      <div className="absolute inset-0 flex items-center justify-center group">
+        <div className="bg-amber-500 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="white"
+            className="mr-1"
+          >
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+      </div>
+      <div className="absolute bottom-4 right-4 text-white">
+        <p className="text-sm font-medium">فيديو المشروع</p>
+        <p className="text-xs opacity-75">اضغط للمشاهدة</p>
+      </div>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-amber-50 p-4 rounded-lg">
+        <h4 className="font-medium mb-3">قريب من:</h4>
+        <ul className="space-y-2">
+          {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية", "المطار"].map((item, index) => (
+            <li key={index} className="flex items-center">
+              <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
+              <span className="text-sm">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="bg-amber-50 p-4 rounded-lg">
+        <h4 className="font-medium mb-3">دقائق من:</h4>
+        <ul className="space-y-2">
+          {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
+            <li key={index} className="flex items-center">
+              <Check className="h-5 w-5 text-amber-500 ml-2 flex-shrink-0" />
+              <span className="text-sm">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <button
+    onClick={() => setIsModalOpen(true)}
+    className="mt-6 w-full bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600 transition-colors duration-200"
+  >
+    احجز شقتك الان
+  </button>
+</div>
+
 
             {/* Warranty Card */}
             <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
@@ -515,7 +655,7 @@ export default function LandingPage() {
       </section>
 
       {/* Project Video */}
-      <section ref={(el) => addToRefs(el, 1)} className="py-10 bg-white">
+      {/* <section ref={(el) => addToRefs(el, 1)} className="py-10 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -565,7 +705,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Project Models */}
       <section ref={(el) => addToRefs(el, 2)} className="py-10 bg-gradient-to-b from-slate-50 to-white">
@@ -746,40 +886,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Project Map */}
-      <section ref={(el) => addToRefs(el, 3)} className="py-10 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible[3] ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-6"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-center">موقع المشروع</h2>
-            <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isVisible[3] ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative aspect-square md:aspect-[4/3] lg:aspect-[5/4] bg-slate-200 rounded-xl overflow-hidden shadow-lg"
-          >
-            <div className="w-full h-[400px] md:h-[500px] lg:h-full rounded-lg overflow-hidden shadow-lg">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="موقع المشروع على خرائط جوجل"
-              />
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Interactive Model Display Section */}
       <section className="py-24 md:py-40 bg-slate-50">
@@ -857,7 +964,40 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      {/* Project Map */}
+      <section ref={(el) => addToRefs(el, 3)} className="py-10 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible[3] ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-6"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-center">موقع المشروع</h2>
+            <div className="w-16 h-1 bg-amber-500 mr-auto ml-auto mt-2"></div>
+          </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isVisible[3] ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative aspect-square md:aspect-[4/3] lg:aspect-[5/4] bg-slate-200 rounded-xl overflow-hidden shadow-lg"
+          >
+            <div className="w-full h-[400px] md:h-[500px] lg:h-full rounded-lg overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="موقع المشروع على خرائط جوجل"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </section>
       {/* CTA Section */}
       <section ref={(el) => addToRefs(el, 4)} className="py-10 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4">
