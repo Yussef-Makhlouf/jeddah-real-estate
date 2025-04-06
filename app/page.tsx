@@ -685,8 +685,8 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <Tabs defaultValue="model-a" className="w-full">
-              <TabsList className="grid grid-cols-3 mb-6 bg-slate-100 p-1 rounded-full w-full ">
-                {["A", "B", "D"].map((model, index) => (
+              <TabsList className="grid grid-cols-4 mb-6 bg-slate-100 p-1 rounded-full w-full ">
+                {["A","B", "C" ,"D"].map((model, index) => (
                   <TabsTrigger
                     key={index}
                     value={`model-${model.toLowerCase()}`}
@@ -778,7 +778,7 @@ export default function LandingPage() {
                     transition={{ duration: 0.3 }}
                     className="max-w-4xl mx-auto"
                   >
-                    {/* <MobileModelCard
+                    <MobileModelCard
                       title="نموذج C"
                       image="/c.jpg"
                       subtitle="واجهة جنوبية غربية"
@@ -802,7 +802,7 @@ export default function LandingPage() {
                         "كاميرات مراقبة",
                       ]}
                       onInquire={handleInquire}
-                    /> */}
+                    />
                   </motion.div>
                 </TabsContent>
 
@@ -849,112 +849,57 @@ export default function LandingPage() {
       </section>
 
       {/* Interactive Model Display Section */}
-      <section className="py-24 md:py-40 bg-slate-50">
-        <div className="container mx-auto px-4">
-          {/* Model Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {modelData.map((model, index) => (
-              <button
-                key={model.name}
-                className={`px-8 py-3 rounded-full text-base font-semibold transition-all transform hover:scale-105 ${selectedModel === index ? 'bg-[#c48765] text-white shadow-lg' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-md'}`}
-                onClick={() => setSelectedModel(index)}
-              >
-                النموذج {model.name}
-              </button>
-            ))}
-          </div>
 
-          {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12">
-            {/* Information Panel */}
-            <div className="bg-white p-8 rounded-2xl shadow-xl h-full">
-              <h3 className="text-2xl font-bold mb-6 text-slate-800">معلومات النموذج</h3>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 mb-2">المساحة</span>
-                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].area}</span>
-                  {modelData[selectedModel].areaDetails && (
-                    <span className="text-sm text-slate-500 mt-1">{modelData[selectedModel].areaDetails}</span>
-                  )}
-                </div>
-                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 mb-2">السعر</span>
-                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].price}</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 mb-2">الغرف</span>
-                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].rooms}</span>
-                  <span className="text-sm text-slate-500 mt-1">غرف نوم</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 mb-2">دورات المياه</span>
-                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].bathrooms}</span>
-                  <span className="text-sm text-slate-500 mt-1">حمامات حديثة</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 mb-2">الطابق</span>
-                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].floor}</span>
-                  <span className="text-sm text-slate-500 mt-1">طابق أرضي</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 mb-2">الموقع</span>
-                  <span className="text-2xl font-bold text-slate-800">{modelData[selectedModel].location}</span>
-                </div>
-              </div>
-              <div className="mt-6 p-4 bg-amber-50 rounded-lg">
-                <p className="text-slate-700 text-sm leading-relaxed">
-                  {modelData[selectedModel].description}
-                </p>
-              </div>
-            </div>
-
-            {/* Main Image */}
-            <div className="relative w-full h-auto bg-slate-100 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-              <Image
-                src={`/plans/model-${selectedModel + 1}.jpg`}
-                alt={`مخطط النموذج ${selectedModel + 1}`}
-                width={1200}
-                height={800}
-                className="w-full h-auto object-contain p-6 hover:scale-110 transition-transform duration-500"
-                quality={100}
-                priority={true}
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-              />
-            </div>
-          </div>
-        </div>
-      </section>
       {/* Project Map */}
-      <section ref={(el) => addToRefs(el, 3)} className="py-10 bg-white">
+      <section ref={(el) => addToRefs(el, 3)} className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible[3] ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-center mb-6"
+            className="text-center mb-8"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-center">موقع المشروع</h2>
-            <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-[#34222e]">موقع المشروع</h2>
+            <div className="w-20 h-1 bg-[#c48765] mx-auto mt-4"></div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isVisible[3] ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative aspect-square md:aspect-[4/3] lg:aspect-[5/4] bg-slate-200 rounded-xl overflow-hidden shadow-lg"
+            className="max-w-6xl mx-auto"
           >
-            <div className="w-full h-[400px] md:h-[500px] lg:h-full rounded-lg overflow-hidden shadow-lg">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="موقع المشروع على خرائط جوجل"
-              />
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Map Container */}
+              <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="موقع المشروع على خرائط جوجل"
+                />
+              </div>
+
+              {/* Location Details */}
+              <div className="bg-[#34222e] text-white p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">العنوان</h3>
+                    <p className="text-gray-300">حي الزهراء، جدة، المملكة العربية السعودية</p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">المعالم القريبة</h3>
+                    <ul className="text-gray-300 space-y-1">
+                      <li>• طريق الأمير سلطان </li>
+                      <li>• شارع حراء</li>
+                      <li>• شارع فهد بن زعير</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
