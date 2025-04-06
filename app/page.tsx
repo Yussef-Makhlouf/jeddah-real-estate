@@ -72,7 +72,7 @@ export default function LandingPage() {
   const shareProject = async () => {
     const shareData = {
       title: "مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة",
-      text: "مشروع سكني متميز في حي الزهراء بجدة بأسعار استثنائية تبدأ من 775,000 ﷼ فقط",
+      text: "مشروع سكني متميز في حي الزهراء بجدة بأسعار استثنائية تبدأ من 830000 ﷼ فقط",
       url: window.location.href,
     }
 
@@ -149,13 +149,18 @@ export default function LandingPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
-  const [errors, setErrors] = useState({});
+  interface FormErrors {
+    name?: string;
+    phone?: string;
+    message?: string;
+  }
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate form
-    const newErrors = {};
+    const newErrors: FormErrors = {};
     if (!formData.name) newErrors.name = 'الرجاء إدخال الاسم';
     if (!formData.phone || !/^05\d{8}$/.test(formData.phone)) newErrors.phone = 'الرجاء إدخال رقم هاتف صحيح';
     if (!formData.message) newErrors.message = 'الرجاء إدخال الرسالة';
@@ -288,7 +293,7 @@ export default function LandingPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#c48765] text-white py-2 rounded-lg hover:bg-[#ca8a04] transition-colors"
+                className="w-full bg-[#c48765] text-white py-2 rounded-lg hover:bg-[#34222e] transition-colors"
               >
                 إرسال
               </button>
@@ -297,11 +302,10 @@ export default function LandingPage() {
         </div>
       )}
 
-
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
         <div
-          className="h-full bg-gradient-to-r from-amber-400 to-[#ca8a04]"
+          className="h-full bg-[#c48765]"
           style={{ width: `${scrollProgress}%` }}
         ></div>
       </div>
@@ -326,103 +330,101 @@ export default function LandingPage() {
       </button>
 
       {/* Hero Section */}
-<section className="relative bg-gradient-to-b from-amber-50/50 to-white py-32 overflow-hidden">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16 max-w-3xl mx-auto">
-      <h1 className="text-5xl md:text-6xl font-bold text-amber-800 mb-6">
-        امتلك منزل العمر في جدة
-      </h1>
-      <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
-        مشروع 24-حي الزهراء
-      </h2>
-      <p className="text-2xl md:text-3xl text-[#ca8a04] font-bold">
-        بأسعار تبدأ من 830,000 ريال فقط
-      </p>
-    </div>
-
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]">
-        <div className="text-center mb-8">
-          <h3 className="text-3xl font-bold text-amber-800 mb-2">
-            نموذج التواصل
-          </h3>
-          <p className="text-slate-600">
-            املأ النموذج وسيقوم مستشارنا العقاري بالتواصل معك
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="block text-lg font-medium text-slate-700">الاسم</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full p-4 text-lg border-2 rounded-2xl bg-slate-50/50"
-              placeholder="الاسم الكامل"
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
+      <section className="relative bg-[#34222e]/5 py-32 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h1 className="text-5xl md:text-6xl font-bold text-[#34222e] mb-6">
+              امتلك منزل العمر في جدة
+            </h1>
+            <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
+              مشروع 24-حي الزهراء
+            </h2>
+            <p className="text-2xl md:text-3xl text-[#c48765] font-bold">
+              بأسعار تبدأ من 830,000 ريال فقط
+            </p>
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-lg font-medium text-slate-700">رقم الهاتف</label>
-            <div className="relative">
-              <input
-                type="text"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full p-4 text-lg border-2 rounded-2xl bg-slate-50/50"
-                placeholder="05XXXXXXXX"
-              />
-              <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]/20">
+              <div className="text-center mb-8">
+                <h3 className="text-[#34222e]">
+                  املأ النموذج وسيقوم مستشارنا العقاري بالتواصل معك
+                </h3>
               </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="block text-lg font-medium text-slate-700">الاسم</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
+                    placeholder="الاسم الكامل"
+                  />
+                  {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-lg font-medium text-slate-700">رقم الهاتف</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
+                      placeholder="05XXXXXXXX"
+                    />
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                  </div>
+                  {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-lg font-medium text-slate-700">الرسالة</label>
+                  <textarea
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5 resize-none"
+                    rows={4}
+                    placeholder="اكتب رسالتك هنا"
+                  />
+                  {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-[#34222e] text-white py-4 rounded-2xl text-xl font-medium hover:from-[#34222e] hover:to-[#1d0728] transition-all duration-300"
+                >
+                  تواصل مع مستشار المبيعات
+                </button>
+
+                <p className="text-center text-slate-500 mt-6">
+                  سيتم الرد عليك في أقرب وقت ممكن
+                </p>
+              </form>
             </div>
-            {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
           </div>
+        </div>
+      </section>
 
-          <div className="space-y-2">
-            <label className="block text-lg font-medium text-slate-700">الرسالة</label>
-            <textarea
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full p-4 text-lg border-2 rounded-2xl bg-slate-50/50 resize-none"
-              rows={4}
-              placeholder="اكتب رسالتك هنا"
-            />
-            {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-[#1d0728] text-white py-4 rounded-2xl text-xl font-medium"
-          >
-            تواصل مع مستشار المبيعات
-          </button>
-
-          <p className="text-center text-slate-500 mt-6">
-            سيتم الرد عليك في أقرب وقت ممكن
-          </p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
       {/* Quick Stats */}
       {/* <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-3 gap-2 text-right">
-            <div className="bg-amber-50 p-3 rounded-xl text-center">
+            <div className="bg-[#34222e]/10 p-3 rounded-xl text-center">
               <div className="text-[#c48765] font-bold text-xl md:text-2xl">156+</div>
               <div className="text-xs md:text-sm">م² مساحة</div>
             </div>
-            <div className="bg-amber-50 p-3 rounded-xl text-center">
+            <div className="bg-[#34222e]/10 p-3 rounded-xl text-center">
               <div className="text-[#c48765] font-bold text-xl md:text-2xl">4-5</div>
               <div className="text-xs md:text-sm">غرف</div>
             </div>
-            <div className="bg-amber-50 p-3 rounded-xl text-center">
+            <div className="bg-[#34222e]/10 p-3 rounded-xl text-center">
               <div className="text-[#c48765] font-bold text-xl md:text-2xl">25</div>
               <div className="text-xs font-medium">
                 سنة ضمان
@@ -509,16 +511,16 @@ export default function LandingPage() {
         </div>
       </section>
       {/* Expandable Sections */}
-      <section className="py-8 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-12 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             {/* Features Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
-              <div className="flex items-center mb-6">
-                <Home className="h-8 w-8 text-[#c48765]" />
-                <h3 className="text-xl font-bold mr-3">مميزات المشروع</h3>
+            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col">
+              <div className="flex items-center mb-8">
+                <Home className="h-10 w-10 text-[#c48765]" />
+                <h3 className="text-2xl font-bold mr-4">مميزات المشروع</h3>
               </div>
-              <ul className="space-y-3 flex-grow">
+              <ul className="space-y-4 flex-grow">
                 {[
                   "موقع إستراتيجي قريب من الواجهة البحرية",
                   "قريب من جميع الخدمات",
@@ -527,186 +529,143 @@ export default function LandingPage() {
                   "مواقف سيارات مخصصة",
                   "سمارت هوم"
                 ].map((feature, index) => (
-                  <li key={index} className="flex items-center p-3 bg-amber-50 rounded-lg">
-                    <Check className="h-5 w-5 text-[#c48765] ml-2" />
-                    <span className="text-sm">{feature}</span>
+                  <li key={index} className="flex items-center p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200">
+                    <Check className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                    <span className="text-base">{feature}</span>
                   </li>
                 ))}
               </ul>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-6 w-full bg-[#c48765] text-white px-4 py-3 rounded-lg hover:bg-[#ca8a04] transition-colors duration-200"
+                className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
               >
-                احجز شقتك الان
+                احجز الآن
               </button>
             </div>
 
-
-
-{/* Location Card */}
-
-<div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col min-h-[600px]">
-  <div className="flex items-center mb-6">
-    <MapPin className="h-8 w-8 text-[#c48765]" />
-    <h3 className="text-xl font-bold mr-3">مميزات الموقع</h3>
-  </div>
-  <div className="space-y-4 flex-grow">
-    {/* Video Preview with better responsive design */}
-    <div 
-      className="relative w-full aspect-video bg-slate-200 rounded-lg overflow-hidden shadow-lg cursor-pointer mb-6"
-      onClick={() => setVideoModalOpen(true)}
-    >
-      <Image
-        src="/1.jpg"
-        alt="فيديو المشروع"
-        fill
-        className="object-cover transition-transform duration-300 hover:scale-105"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        priority
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-      <div className="absolute inset-0 flex items-center justify-center group">
-        <div className="bg-[#c48765] w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="white"
-            className="mr-1"
-          >
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-        </div>
-      </div>
-      <div className="absolute bottom-4 right-4 text-white">
-        <p className="text-sm font-medium">فيديو المشروع</p>
-        <p className="text-xs opacity-75">اضغط للمشاهدة</p>
-      </div>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div className="bg-amber-50 p-4 rounded-lg">
-        <h4 className="font-medium mb-3">قريب من:</h4>
-        <ul className="space-y-2">
-          {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية", "المطار"].map((item, index) => (
-            <li key={index} className="flex items-center">
-              <Check className="h-5 w-5 text-[#c48765] ml-2 flex-shrink-0" />
-              <span className="text-sm">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="bg-amber-50 p-4 rounded-lg">
-        <h4 className="font-medium mb-3">دقائق من:</h4>
-        <ul className="space-y-2">
-          {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
-            <li key={index} className="flex items-center">
-              <Check className="h-5 w-5 text-[#c48765] ml-2 flex-shrink-0" />
-              <span className="text-sm">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </div>
-  <button
-    onClick={() => setIsModalOpen(true)}
-    className="mt-6 w-full bg-[#c48765] text-white px-4 py-3 rounded-lg hover:bg-[#ca8a04] transition-colors duration-200"
-  >
-    احجز شقتك الان
-  </button>
-</div>
-
-
-            {/* Warranty Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-[500px]">
-              <div className="flex items-center mb-6">
-                <Shield className="h-8 w-8 text-[#c48765]" />
-                <h3 className="text-xl font-bold mr-3">ضمانات المشروع</h3>
+            {/* Location Card */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col">
+              <div className="flex items-center mb-8">
+                <MapPin className="h-10 w-10 text-[#c48765]" />
+                <h3 className="text-2xl font-bold mr-4">مميزات الموقع</h3>
               </div>
-              <div className="grid grid-cols-2 gap-3 flex-grow">
-                {[
-                  { years: "25", description: "القواطع والأفياش" },
-                  { years: "20", description: "الهيكل الإنشائي" },
-                  { years: "5", description: "المصاعد" },
-                  { years: "2", description: "أعمال السباكة والكهرباء" },
-                  { years: "2", description: "سمارت هوم" },
-                  { years: "1", description: "اتحاد ملاك" }
-                ].map((warranty, index) => (
-                  <div key={index} className="p-3 bg-amber-50 rounded-lg flex flex-col justify-center">
-                    <div className="text-xl font-bold text-[#c48765]">{warranty.years}</div>
-                    <div className="text-xs font-medium">
-                      {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
-                    </div>
-                    <div className="text-sm mt-1">{warranty.description}</div>
+              <div className="space-y-6 flex-grow">
+                <div className="grid grid-cols-1 gap-6">
+                  <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
+                    <h4 className="text-lg font-bold mb-4">قريب من:</h4>
+                    <ul className="space-y-3">
+                      {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية", "المطار"].map((item, index) => (
+                        <li key={index} className="flex items-center">
+                          <Check className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                          <span className="text-base">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
+                  <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
+                    <h4 className="text-lg font-bold mb-4">دقائق من:</h4>
+                    <ul className="space-y-3">
+                      {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
+                        <li key={index} className="flex items-center">
+                          <Check className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                          <span className="text-base">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-6 w-full bg-[#c48765] text-white px-4 py-3 rounded-lg hover:bg-[#ca8a04] transition-colors duration-200"
+                className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
               >
-                احجز شقتك الان
+                احجز شقتك الآن
               </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Project Video */}
-      {/* <section ref={(el) => addToRefs(el, 1)} className="py-10 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible[1] ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-6"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-center">فيديو المشروع</h2>
-            <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isVisible[1] ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative aspect-video bg-slate-200 rounded-xl overflow-hidden shadow-lg"
-            onClick={() => setVideoModalOpen(true)}
-          >
-            <Image
-              src="/1.jpg"
-              alt="فيديو المشروع"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            <div className="absolute bottom-4 right-4 text-white">
-              <p className="text-sm font-medium">فيديو المشروع</p>
-              <p className="text-xs">فيديو توضيحي</p>
+          {/* Project Video Section */}
+          <div className="mb-12">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-slate-900">فيديو المشروع</h2>
+              <div className="w-20 h-1 bg-[#c48765] mx-auto mt-4"></div>
             </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-[#c48765] w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white mr-1"
-                >
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
+
+            <div 
+              className="relative aspect-video max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-100 cursor-pointer"
+              onClick={() => setVideoModalOpen(true)}
+            >
+              <Image
+                src="/1.jpg"
+                alt="فيديو المشروع"
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/40"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-[#c48765] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    className="ml-2"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </div>
+              </div>
+              <div className="absolute bottom-6 right-6 text-white">
+                <p className="text-xl font-bold mb-1">فيديو المشروع</p>
+                <p className="text-base">اضغط للمشاهدة</p>
               </div>
             </div>
-          </motion.div>
-        </div>
-      </section> */}
 
+            {/* Book now button */}
+            <div className="text-center mt-8">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-[#c48765] hover:bg-[#34222e] text-white px-8 py-4 rounded-xl text-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                احجز وتملك الآن شقة العمر
+              </button>
+            </div>
+          </div>
+          {/* Warranty Card - Full Width */}
+          <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300">
+            <div className="flex items-center mb-8">
+              <Shield className="h-10 w-10 text-[#c48765]" />
+              <h3 className="text-2xl font-bold mr-4">ضمانات المشروع</h3>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {[
+                { years: "25", description: "القواطع والأفياش" },
+                { years: "20", description: "الهيكل الإنشائي" },
+                { years: "5", description: "المصاعد" },
+                { years: "2", description: "أعمال السباكة والكهرباء" },
+                { years: "2", description: "سمارت هوم" },
+                { years: "1", description: "اتحاد ملاك" }
+              ].map((warranty, index) => (
+                <div key={index} className="p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200 flex flex-col justify-center">
+                  <div className="text-2xl font-bold text-[#c48765]">{warranty.years}</div>
+                  <div className="text-sm font-medium">
+                    {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
+                  </div>
+                  <div className="text-base mt-2">{warranty.description}</div>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
+            >
+              سجل الآن
+            </button>
+          </div>
+        </div>
+      </section>
       {/* Project Models */}
       <section ref={(el) => addToRefs(el, 2)} className="py-10 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4">
@@ -745,6 +704,7 @@ export default function LandingPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
+                    className="max-w-4xl mx-auto"
                   >
                     <MobileModelCard
                       title="نموذج A"
@@ -780,6 +740,7 @@ export default function LandingPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
+                    className="max-w-4xl mx-auto"
                   >
                     <MobileModelCard
                       title="نموذج B"
@@ -815,11 +776,11 @@ export default function LandingPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
+                    className="max-w-4xl mx-auto"
                   >
                     <MobileModelCard
                       title="نموذج C"
                       image="/c.jpg"
-                      
                       subtitle="واجهة جنوبية غربية"
                       area={156}
                       roofArea={0}
@@ -851,6 +812,7 @@ export default function LandingPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
+                    className="max-w-4xl mx-auto"
                   >
                     <MobileModelCard
                       title="نموذج D"
@@ -885,8 +847,6 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
-
-
 
       {/* Interactive Model Display Section */}
       <section className="py-24 md:py-40 bg-slate-50">
@@ -1007,14 +967,14 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
           >
             <Card className="border-none shadow-xl overflow-hidden py-12">
-              <div className="bg-gradient-to-r from-[#c48765] to-[#ca8a04] p-4 text-white text-center">
+              <div className="bg-[#c48765]  p-4 text-white text-center">
                 <h2 className="text-xl font-bold mb-1">احجز وحدتك الآن</h2>
                 <p className="text-sm">سارع بالحجز قبل نفاذ الوحدات المتاحة</p>
               </div>
               <CardContent className="p-4 bg-white">
                 <Button
                   onClick={() => openWhatsApp()}
-                  className="w-full bg-gradient-to-r from-[#c48765] to-[#ca8a04] hover:from-[#ca8a04] hover:to-[#34222e] text-white py-3 rounded-full shadow-lg"
+                  className="w-full bg-[#34222e] hover:from-[#34222e] hover:to-[#1d0728] text-white py-3 rounded-full shadow-lg"
                 >
                   تواصل معنا الآن
                 </Button>
@@ -1023,7 +983,7 @@ export default function LandingPage() {
 
                 <a
                   href="tel:0536667967"
-                  className="flex items-center justify-center gap-2 mt-2 p-3 border border-[#1d0728] rounded-md text-[#ca8a04] font-medium"
+                  className="flex items-center justify-center gap-2 mt-2 p-3 border border-[#1d0728] rounded-md text-[#c48765] font-medium"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1059,11 +1019,11 @@ export default function LandingPage() {
             <div className="container mx-auto flex items-center justify-between">
               <div>
                 <div className="text-sm font-bold">السعر يبدأ من</div>
-                <div className="text-lg font-bold text-[#c48765]">775,000 ﷼</div>
+                <div className="text-lg font-bold text-[#c48765]">830000 ﷼</div>
               </div>
               <Button
                 onClick={() => openWhatsApp()}
-                className="bg-gradient-to-r from-[#c48765] to-[#ca8a04] hover:from-[#34222e] hover:to-[#1d0728] text-white px-6 py-2 rounded-full shadow-md"
+                className="bg-[#34222e] text-white px-6 py-2 rounded-full shadow-md"
               >
                 احجز الآن
               </Button>
@@ -1127,7 +1087,7 @@ export default function LandingPage() {
               className="relative w-full max-w-sm bg-white rounded-xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-gradient-to-r from-[#c48765] to-[#ca8a04] p-4 text-white">
+              <div className="bg-[#34222e] p-4 text-white">
                 <h3 className="text-lg font-bold text-center">مشاركة المشروع</h3>
                 <p className="text-sm text-center">شارك المشروع مع أصدقائك وعائلتك</p>
               </div>
@@ -1203,7 +1163,7 @@ export default function LandingPage() {
                     className="w-full p-2 border border-gray-300 rounded-md text-sm text-right"
                   />
                   <Button
-                    className="absolute right-1 top-1 bottom-1 bg-[#c48765] hover:bg-[#ca8a04] text-white text-xs px-2"
+                    className="absolute right-1 top-1 bottom-1 bg-[#c48765] hover:bg-[#34222e] text-white text-xs px-2"
                     onClick={() => {
                       navigator.clipboard.writeText(window.location.href);
                       alert("تم نسخ الرابط");
@@ -1303,7 +1263,7 @@ export default function LandingPage() {
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-            <div className="absolute top-4 right-4 bg-[#ca8a04] text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">
+            <div className="absolute top-4 right-4 bg-[#34222e] text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">
               {price}
             </div>
           </div>
@@ -1359,11 +1319,11 @@ export default function LandingPage() {
           <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-100">
             <div>
               <div className="text-xs text-slate-500">السعر يبدأ من</div>
-              <div className="text-xl font-bold text-[#ca8a04]">{price} ريال</div>
+              <div className="text-xl font-bold text-[#34222e]">{price} ريال</div>
             </div>
             <Button
               size="sm"
-              className="bg-[#c48765] hover:bg-[#ca8a04] text-white px-6"
+              className="bg-[#c48765] hover:bg-[#34222e] text-white px-6"
               onClick={() => onInquire(title)}
             >
               استفسار عبر واتساب
