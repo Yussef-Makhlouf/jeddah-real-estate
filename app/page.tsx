@@ -685,12 +685,12 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <Tabs defaultValue="model-a" className="w-full">
-              <TabsList className="grid grid-cols-4 mb-6 bg-slate-100 p-1 rounded-full w-full">
-                {["A", "B", "C", "D"].map((model, index) => (
+              <TabsList className="grid grid-cols-3 mb-6 bg-slate-100 p-1 rounded-full w-full ">
+                {["A", "B", "D"].map((model, index) => (
                   <TabsTrigger
                     key={index}
                     value={`model-${model.toLowerCase()}`}
-                    className="rounded-full data-[state=active]:bg-[#c48765] data-[state=active]:text-white py-2"
+                    className="rounded-full data-[state=active]:bg-[#c48765]  data-[state=active]:text-white py-2"
                   >
                     {model}
                   </TabsTrigger>
@@ -778,7 +778,7 @@ export default function LandingPage() {
                     transition={{ duration: 0.3 }}
                     className="max-w-4xl mx-auto"
                   >
-                    <MobileModelCard
+                    {/* <MobileModelCard
                       title="نموذج C"
                       image="/c.jpg"
                       subtitle="واجهة جنوبية غربية"
@@ -802,7 +802,7 @@ export default function LandingPage() {
                         "كاميرات مراقبة",
                       ]}
                       onInquire={handleInquire}
-                    />
+                    /> */}
                   </motion.div>
                 </TabsContent>
 
