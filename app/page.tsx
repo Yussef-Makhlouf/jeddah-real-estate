@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
-import { Building2, MapPin, Shield, Home, Car, Wifi, Check, ChevronDown, X, Share2 } from "lucide-react"
+import { Building2, MapPin, Shield, Home, Car, Wifi, Check, ChevronDown, X, Share2, PhoneIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -198,9 +198,9 @@ export default function LandingPage() {
     {
       name: 'A',
       price: '830,000 ريال',
-      area: '150 م²',
-      rooms: 3,
-      bathrooms: 2,
+      area: '156 م²',
+      rooms: 4,
+      bathrooms: 4,
       floor: 1,
       location: 'قريب من المطار',
       description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
@@ -209,8 +209,8 @@ export default function LandingPage() {
       name: 'B',
       price: '930,000 ريال',
       area: '190 م²',
-      rooms: 3,
-      bathrooms: 2,
+      rooms: 5,
+      bathrooms: 4,
       floor: 1,
       location: 'قريب من المطار',
       description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
@@ -218,20 +218,20 @@ export default function LandingPage() {
     {
       name: 'C',
       price: '830,000 ريال',
-      area: '150 م²',
-      rooms: 3,
-      bathrooms: 2,
+      area: '156 م²',
+      rooms: 4,
+      bathrooms: 4,
       floor: 1,
       location: 'قريب من المطار',
       description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
     },
     {
       name: 'D',
-      price: '830,000 ريال',
+      price: '1,350,000 ريال',
       area: '220 م²',
       areaDetails: 'مساحة المباني ١٨٠ متر ومساحة السطح ٤٠ متر',
-      rooms: 3,
-      bathrooms: 2,
+      rooms: 5,
+      bathrooms: 5,
       floor: 1,
       location: 'قريب من المطار',
       description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
@@ -641,7 +641,7 @@ export default function LandingPage() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
-                { years: "25", description: "القواطع والأفياش" },
+                { years: "20", description: "القواطع والأفياش" },
                 { years: "20", description: "الهيكل الإنشائي" },
                 { years: "5", description: "المصاعد" },
                 { years: "2", description: "أعمال السباكة والكهرباء" },
@@ -720,7 +720,7 @@ export default function LandingPage() {
                         "غرفة سائق",
                         "شقق مودرن",
                         "أسقف مرتفعة",
-                        "شبابيك كبيرة",
+                        "نوافذ كبيرة",
                         "صالة",
                         "مطبخ",
                         "بلكونة",
@@ -756,7 +756,7 @@ export default function LandingPage() {
                         "غرفة سائق",
                         "شقق مودرن",
                         "أسقف مرتفعة",
-                        "شبابيك كبيرة",
+                        "نوافذ كبيرة",
                         "صالة",
                         "مطبخ",
                         "بلكونة",
@@ -792,7 +792,7 @@ export default function LandingPage() {
                         "غرفة سائق",
                         "شقق مودرن",
                         "أسقف مرتفعة",
-                        "شبابيك كبيرة",
+                        "نوافذ كبيرة",
                         "صالة",
                         "مطبخ",
                         "بلكونة",
@@ -828,7 +828,7 @@ export default function LandingPage() {
                         "غرفة سائق",
                         "شقق مودرن",
                         "أسقف مرتفعة",
-                        "شبابيك كبيرة",
+                        "نوافذ كبيرة",
                         "صالة",
                         "مطبخ",
                         "بلكونة",
@@ -909,12 +909,13 @@ export default function LandingPage() {
             </div>
 
             {/* Main Image */}
-            <div className="relative aspect-square lg:h-[700px] bg-slate-100 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
+            <div className="relative w-full h-auto bg-slate-100 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
               <Image
                 src={`/plans/model-${selectedModel + 1}.jpg`}
                 alt={`مخطط النموذج ${selectedModel + 1}`}
-                fill
-                className="object-cover p-6 hover:scale-110 transition-transform duration-500"
+                width={1200}
+                height={800}
+                className="w-full h-auto object-contain p-6 hover:scale-110 transition-transform duration-500"
                 quality={100}
                 priority={true}
                 placeholder="blur"
@@ -969,7 +970,7 @@ export default function LandingPage() {
             <Card className="border-none shadow-xl overflow-hidden py-12">
               <div className="bg-[#c48765]  p-4 text-white text-center">
                 <h2 className="text-xl font-bold mb-1">احجز وحدتك الآن</h2>
-                <p className="text-sm">سارع بالحجز قبل نفاذ الوحدات المتاحة</p>
+                <p className="text-sm">سارع بالحجز قبل نفاد الوحدات المتاحة</p>
               </div>
               <CardContent className="p-4 bg-white">
                 <Button
@@ -985,19 +986,7 @@ export default function LandingPage() {
                   href="tel:0536667967"
                   className="flex items-center justify-center gap-2 mt-2 p-3 border border-[#1d0728] rounded-md text-[#c48765] font-medium"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                  </svg>
+            <PhoneIcon className="w-4 h-4" />
                   0536667967
                 </a>
               </CardContent>
@@ -1019,7 +1008,7 @@ export default function LandingPage() {
             <div className="container mx-auto flex items-center justify-between">
               <div>
                 <div className="text-sm font-bold">السعر يبدأ من</div>
-                <div className="text-lg font-bold text-[#c48765]">830000 ﷼</div>
+                <div className="text-lg font-bold text-[#c48765]">﷼ 830000 </div>
               </div>
               <Button
                 onClick={() => openWhatsApp()}
@@ -1319,7 +1308,7 @@ export default function LandingPage() {
           <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-100">
             <div>
               <div className="text-xs text-slate-500">السعر يبدأ من</div>
-              <div className="text-xl font-bold text-[#34222e]">{price} ريال</div>
+              <div className="text-xl font-bold text-[#34222e]"> ريال {price}</div>
             </div>
             <Button
               size="sm"
