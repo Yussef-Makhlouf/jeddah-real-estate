@@ -10,6 +10,21 @@ import { motion, AnimatePresence } from "framer-motion"
 import image from "next/image"
 import Link from "next/link"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
+import emailjs from '@emailjs/browser'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import nodemailer from 'nodemailer';
+
+// Create a transporter object
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.hostinger.com',
+//   port: 465,
+//   secure: false,
+//   auth: {
+//     user: '24_project@raf-advanced.sa', // Replace with your email
+//     pass: 'Yussefali@1234' // Replace with your app password
+//   }
+// });
 
 export default function LandingPage() {
   // Platform detection (would be server-side in production)
@@ -26,7 +41,7 @@ export default function LandingPage() {
     features: string[];
     onInquire: (modelName: string) => void; // Add this prop
   }
-
+  
   // Set RTL direction for Arabic content
   useEffect(() => {
     document.documentElement.dir = "rtl"
@@ -156,41 +171,83 @@ export default function LandingPage() {
   }
   const [errors, setErrors] = useState<FormErrors>({});
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent duplicate submissions
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     // Validate form
     const newErrors: FormErrors = {};
     if (!formData.name) newErrors.name = 'الرجاء إدخال الاسم';
     if (!formData.phone || !/^05\d{8}$/.test(formData.phone)) newErrors.phone = 'الرجاء إدخال رقم هاتف صحيح';
-    // if (!formData.message) newErrors.message = 'الرجاء إدخال الرسالة';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      setIsSubmitting(false);
       return;
     }
 
-    // Format WhatsApp message
-    const message = `السلام عليكم، استفسر بخصوص مشروع 24 حي الزهراء
+    try {
+      // Send email through API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          message: formData.message
+        }),
+      });
 
-الاسم: ${formData.name}
-رقم الهاتف: ${formData.phone}
-الرسالة: ${formData.message}`;
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
 
-    // Open WhatsApp
-    const phoneNumber = '+201101675983';
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+      // Show success toast
+      toast.success('تم إرسال استفسارك بنجاح! سنتواصل معك قريباً', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        rtl: true,
+      });
 
-    // Prevent going back to the homepage after form submission
-    window.history.pushState(null, '', window.location.href);
-    window.onpopstate = function () {
+      // Prevent going back to the homepage after form submission
       window.history.pushState(null, '', window.location.href);
-    };
+      window.onpopstate = function () {
+        window.history.pushState(null, '', window.location.href);
+      };
 
-    // Redirect to thank you page
-    window.history.replaceState(null, '', '/thank-you');
-    window.location.href = '/thank-you';
+      // Redirect to thank you page
+      window.history.replaceState(null, '', '/thank-you');
+      window.location.href = '/thank-you';
+    } catch (error) {
+      console.error('Error:', error);
+      // Show error toast
+      toast.error('حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        rtl: true,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Model Data
@@ -240,13 +297,14 @@ export default function LandingPage() {
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden text-slate-900 text-right" dir="rtl">
+      <ToastContainer />
       {/* Modal */}
       {isModalOpen && (
-        <div
+        <div 
           className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
           onClick={() => setIsModalOpen(false)}
         >
-          <div
+          <div 
             className="bg-white rounded-lg p-6 w-full max-w-md relative"
             onClick={(e) => e.stopPropagation()}
           >
@@ -334,83 +392,83 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative bg-[#34222e]/5 py-32 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16 max-w-3xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold text-[#34222e] mb-6">
-              امتلك منزل العمر في جدة
-            </h1>
-            <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
-              مشروع 24-حي الزهراء
-            </h2>
+        امتلك منزل العمر في جدة
+      </h1>
+      <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
+        مشروع 24-حي الزهراء
+      </h2>
             <p className="text-2xl md:text-3xl text-[#c48765] font-bold">
-              بأسعار تبدأ من 830,000 ريال فقط
-            </p>
+        بأسعار تبدأ من 830,000 ريال فقط
+      </p>
+    </div>
+
+    <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]/20">
+        <div className="text-center mb-8">
+      
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+                  <label className="block text-lg font-medium text-slate-700">الأسم (مطلوب)</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
+              placeholder="الاسم الكامل"
+            />
+            {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
           </div>
 
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]/20">
-              <div className="text-center mb-8">
-
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <label className="block text-lg font-medium text-slate-700">الأسم (مطلوب)</label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
-                    placeholder="الاسم الكامل"
-                  />
-                  {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
-                </div>
-
-                <div className="space-y-2">
+          <div className="space-y-2">
                   <label className="block text-lg font-medium text-slate-700"> رقم الهاتف (مطلوب)</label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            <div className="relative">
+              <input
+                type="text"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
-                      placeholder="05XXXXXXXX"
-                    />
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
-                  </div>
-                  {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
-                </div>
+                placeholder="05XXXXXXXX"
+              />
+              <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+            </div>
+            {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
+          </div>
 
-                <div className="space-y-2">
+          <div className="space-y-2">
                   <label className="block text-lg font-medium text-slate-700">استفسارك (اختياري)</label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            <textarea
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5 resize-none"
-                    rows={4}
+              rows={4}
                     placeholder="اكتب استفسارك هنا"
                     required={false}
-                  />
-                  {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-[#34222e] text-white py-4 rounded-2xl text-xl font-medium hover:from-[#34222e] hover:to-[#1d0728] transition-all duration-300"
-                >
-                  تواصل مع مستشار المبيعات
-                </button>
-
-
-              </form>
-            </div>
+            />
+            {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
           </div>
-        </div>
-      </section>
+
+          <button
+            type="submit"
+                  className="w-full bg-[#34222e] text-white py-4 rounded-2xl text-xl font-medium hover:from-[#34222e] hover:to-[#1d0728] transition-all duration-300"
+          >
+            تواصل مع مستشار المبيعات
+          </button>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Quick Stats */}
       {/* <section className="py-8 bg-white">
@@ -471,10 +529,10 @@ export default function LandingPage() {
                 </motion.div>
               ))}
             </div>
-
+            
             {/* Navigation arrows for larger screens */}
             <div className="hidden md:block">
-              <button
+              <button 
                 className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
                 onClick={() => {
                   const container = document.querySelector('.overflow-x-auto');
@@ -485,7 +543,7 @@ export default function LandingPage() {
               >
                 <ChevronDown className="h-6 w-6 -rotate-90 text-[#c48765]" />
               </button>
-              <button
+              <button 
                 className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
                 onClick={() => {
                   const container = document.querySelector('.overflow-x-auto');
@@ -511,17 +569,17 @@ export default function LandingPage() {
         </div>
       </section>
       {/* Expandable Sections */}
-      <section className="py-12 bg-gradient-to-b from-slate-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            {/* Features Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col">
-              <div className="flex items-center mb-8">
-                <Home className="h-10 w-10 text-[#c48765]" />
-                <h3 className="text-2xl font-bold mr-4">مميزات المشروع</h3>
-              </div>
-              <ul className="space-y-4 flex-grow">
-                {[
+<section className="py-12 bg-gradient-to-b from-slate-50 to-white">
+  <div className="container mx-auto px-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+      {/* Features Card */}
+      <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col">
+        <div className="flex items-center mb-8">
+          <Home className="h-10 w-10 text-[#c48765]" />
+          <h3 className="text-2xl font-bold mr-4">مميزات المشروع</h3>
+        </div>
+        <ul className="space-y-4 flex-grow">
+          {[
                   {
                     text: "موقع إستراتيجي قريب من الواجهة البحرية",
                     icon: <MapPin className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
@@ -546,32 +604,32 @@ export default function LandingPage() {
                     text: "سمارت هوم",
                     icon: <Wifi className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
                   }
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-center p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200">
+          ].map((feature, index) => (
+            <li key={index} className="flex items-center p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200">
                     {feature.icon}
                     <span className="text-base">{feature.text}</span>
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => setIsModalOpen(true)}
+            </li>
+          ))}
+        </ul>
+        <button
+          onClick={() => setIsModalOpen(true)}
                 className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
-              >
-                احجز الآن
-              </button>
-            </div>
+        >
+          احجز الآن
+        </button>
+      </div>
 
-            {/* Location Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col">
-              <div className="flex items-center mb-8">
-                <MapPin className="h-10 w-10 text-[#c48765]" />
-                <h3 className="text-2xl font-bold mr-4">مميزات الموقع</h3>
-              </div>
-              <div className="space-y-6 flex-grow">
-                <div className="grid grid-cols-1 gap-6">
-                  <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
-                    <h4 className="text-lg font-bold mb-4">قريب من:</h4>
-                    <ul className="space-y-3">
+      {/* Location Card */}
+      <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col">
+        <div className="flex items-center mb-8">
+          <MapPin className="h-10 w-10 text-[#c48765]" />
+          <h3 className="text-2xl font-bold mr-4">مميزات الموقع</h3>
+        </div>
+        <div className="space-y-6 flex-grow">
+          <div className="grid grid-cols-1 gap-6">
+            <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
+              <h4 className="text-lg font-bold mb-4">قريب من:</h4>
+              <ul className="space-y-3">
                       {[
                         {
                           text: "الشوارع الرئيسية", icon:
@@ -604,16 +662,16 @@ export default function LandingPage() {
                         { text: "المراكز التجارية", icon: <Building2 className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" /> },
                         { text: "المطار", icon: <Plane className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" /> }
                       ].map((item, index) => (
-                        <li key={index} className="flex items-center">
+                  <li key={index} className="flex items-center">
                           {item.icon}
                           <span className="text-base">{item.text}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
-                    <h4 className="text-lg font-bold mb-4">دقائق من:</h4>
-                    <ul className="space-y-3">
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
+              <h4 className="text-lg font-bold mb-4">دقائق من:</h4>
+              <ul className="space-y-3">
                       {[
                         {
                           text: "طريق الأمير سلطان",
@@ -658,106 +716,106 @@ export default function LandingPage() {
                             </svg>
                           ),
                         }].map((item, index) => (
-                          <li key={index} className="flex items-center">
+                  <li key={index} className="flex items-center">
                             {item.icon}
                             <span className="text-base">{item.text}</span>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
-              >
-                احجز شقتك الآن
-              </button>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          {/* Project Video Section */}
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-slate-900">فيديو المشروع</h2>
-              <div className="w-20 h-1 bg-[#c48765] mx-auto mt-4"></div>
-            </div>
-
-            <div
-              className="relative aspect-video max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-100 cursor-pointer"
-              onClick={() => setVideoModalOpen(true)}
-            >
-              <Image
-                src="/1.jpg"
-                alt="فيديو المشروع"
-                fill
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-black/40"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-[#c48765] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="white"
-                    className="ml-2"
-                  >
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                  </svg>
-                </div>
-              </div>
-              <div className="absolute bottom-6 right-6 text-white">
-                <p className="text-xl font-bold mb-1">فيديو المشروع</p>
-                <p className="text-base">اضغط للمشاهدة</p>
-              </div>
-            </div>
-
-            {/* Book now button */}
-            <div className="text-center mt-8">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-[#c48765] hover:bg-[#34222e] text-white px-8 py-4 rounded-xl text-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                احجز وتملك الآن شقة العمر
-              </button>
-            </div>
-          </div>
-          {/* Warranty Card - Full Width */}
-          <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300">
-            <div className="flex items-center mb-8">
-              <Shield className="h-10 w-10 text-[#c48765]" />
-              <h3 className="text-2xl font-bold mr-4">ضمانات المشروع</h3>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {[
-                { years: "20", description: "القواطع والأفياش" },
-                { years: "20", description: "الهيكل الإنشائي" },
-                { years: "5", description: "المصاعد" },
-                { years: "2", description: "أعمال السباكة والكهرباء" },
-                { years: "2", description: "سمارت هوم" },
-                { years: "1", description: "اتحاد ملاك" }
-              ].map((warranty, index) => (
-                <div key={index} className="p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200 flex flex-col justify-center">
-                  <div className="text-2xl font-bold text-[#c48765]">{warranty.years}</div>
-                  <div className="text-sm font-medium">
-                    {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
-                  </div>
-                  <div className="text-base mt-2">{warranty.description}</div>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
-            >
-              سجل الآن
-            </button>
           </div>
         </div>
-      </section>
+        <button
+          onClick={() => setIsModalOpen(true)}
+                className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
+        >
+          احجز شقتك الآن
+        </button>
+      </div>
+    </div>
+
+    {/* Project Video Section */}
+    <div className="mb-12">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-slate-900">فيديو المشروع</h2>
+        <div className="w-20 h-1 bg-[#c48765] mx-auto mt-4"></div>
+      </div>
+
+      <div 
+        className="relative aspect-video max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-100 cursor-pointer"
+        onClick={() => setVideoModalOpen(true)}
+      >
+        <Image
+          src="/1.jpg"
+          alt="فيديو المشروع"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-[#c48765] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="white"
+              className="ml-2"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+        </div>
+        <div className="absolute bottom-6 right-6 text-white">
+          <p className="text-xl font-bold mb-1">فيديو المشروع</p>
+          <p className="text-base">اضغط للمشاهدة</p>
+        </div>
+      </div>
+
+      {/* Book now button */}
+      <div className="text-center mt-8">
+        <button
+          onClick={() => setIsModalOpen(true)}
+                className="bg-[#c48765] hover:bg-[#34222e] text-white px-8 py-4 rounded-xl text-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+        >
+          احجز وتملك الآن شقة العمر
+        </button>
+      </div>
+    </div>
+    {/* Warranty Card - Full Width */}
+    <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="flex items-center mb-8">
+        <Shield className="h-10 w-10 text-[#c48765]" />
+        <h3 className="text-2xl font-bold mr-4">ضمانات المشروع</h3>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {[
+                { years: "20", description: "القواطع والأفياش" },
+          { years: "20", description: "الهيكل الإنشائي" },
+          { years: "5", description: "المصاعد" },
+          { years: "2", description: "أعمال السباكة والكهرباء" },
+          { years: "2", description: "سمارت هوم" },
+          { years: "1", description: "اتحاد ملاك" }
+        ].map((warranty, index) => (
+          <div key={index} className="p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200 flex flex-col justify-center">
+            <div className="text-2xl font-bold text-[#c48765]">{warranty.years}</div>
+            <div className="text-sm font-medium">
+              {warranty.years === "1" ? "سنة" : warranty.years === "2" ? "سنتين" : "سنوات"}
+            </div>
+            <div className="text-base mt-2">{warranty.description}</div>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={() => setIsModalOpen(true)}
+              className="mt-8 w-full bg-[#c48765] text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-[#34222e] transition-all duration-300 hover:shadow-lg"
+      >
+        سجل الآن
+      </button>
+    </div>
+  </div>
+</section>
       {/* Project Models */}
       <section ref={(el) => addToRefs(el, 2)} className="py-10 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4">
@@ -964,15 +1022,15 @@ export default function LandingPage() {
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
               {/* Map Container */}
               <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
                   className="absolute inset-0 w-full h-full"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="موقع المشروع على خرائط جوجل"
-                />
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="موقع المشروع على خرائط جوجل"
+              />
               </div>
 
               {/* Location Details */}
@@ -1132,35 +1190,35 @@ export default function LandingPage() {
               <div className="p-6">
                 <div className="grid grid-cols-4 gap-4 mb-6">
                   {[
-                    {
-                      name: "واتساب",
-                      color: "#c48765",
+                    { 
+                      name: "واتساب", 
+                      color: "#c48765", 
                       icon: "whatsapp.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة\n\nاستفسر الآن عن مشروع 24 في حي الزهراء\n" + window.location.href);
                         window.open(`https://wa.me/?text=${shareText}`, "_blank");
                       }
                     },
-                    {
-                      name: "تويتر",
-                      color: "#d68c3c",
+                    { 
+                      name: "تويتر", 
+                      color: "#d68c3c", 
                       icon: "twitter.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة");
                         window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(window.location.href)}`, "_blank");
                       }
                     },
-                    {
-                      name: "فيسبوك",
-                      color: "#34222e",
+                    { 
+                      name: "فيسبوك", 
+                      color: "#34222e", 
                       icon: "facebook.svg",
                       action: () => {
                         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, "_blank");
                       }
                     },
-                    {
-                      name: "تلجرام",
-                      color: "#1d0728",
+                    { 
+                      name: "تلجرام", 
+                      color: "#1d0728", 
                       icon: "telegram.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة");
@@ -1168,8 +1226,8 @@ export default function LandingPage() {
                       }
                     },
                   ].map((platform, index) => (
-                    <button
-                      key={index}
+                    <button 
+                      key={index} 
                       className="flex flex-col items-center"
                       onClick={() => {
                         platform.action();
