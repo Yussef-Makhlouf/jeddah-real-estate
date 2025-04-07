@@ -21,9 +21,8 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استفسار جديد - مشروع 24</title>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
         body {
-            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             max-width: 600px;
@@ -65,21 +64,18 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
             font-weight: bold;
             color: #34222e;
             margin-bottom: 5px;
-                font-size: 16px;
+            font-size: 16px;
         }
         .value {
             color: #666;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-
-
         }
         .project-info {
             background-color: #f0f0f0;
             padding: 15px;
             border-radius: 8px;
             margin: 20px 0;
-            direction: rtl;
         }
         .project-info h3 {
             color: #34222e;
@@ -105,19 +101,16 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
             display: flex;
             gap: 10px;
             margin-top: 20px;
+            justify-content: center;
         }
         .button {
             display: inline-block;
             padding: 10px 20px;
             background-color: #c48765;
-            color: white;
+            color: white !important;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #34222e;
         }
         .footer {
             background-color: #34222e;
@@ -126,31 +119,16 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
             text-align: center;
             font-size: 12px;
         }
-        .social-links {
-            margin-top: 10px;
-        }
-        .social-links a {
-            color: white;
-            margin: 0 5px;
-            text-decoration: none;
-        }
         .timestamp {
             color: #999;
-            font-size: 18px;
+            font-size: 14px;
             margin-top: 10px;
             font-weight: bold;
-            
+            text-align: center;
         }
-        p{
-        
-            font-size: 16px;
-            font-weight: bold;
-            color: #34222e;
-            margin-bottom: 10px;
-            margin-right: 10px;
-
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
         }
-
     </style>
 </head>
 <body>
@@ -170,7 +148,10 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
             </div>
             <div class="info-item">
                 <div class="label text-xl">الرسالة</div>
-                <div class="value text-xxl">${message || 'لا يوجد رسالة'}</div>
+                <div class="value text-xxl">
+                 <p>
+                أرغب في الاستفسار عن مشروع رقم 24 حي الزهراء</p>
+                ${message || 'لا يوجد رسالة'}</div>
             </div>
 
              <div class="project-info">
@@ -204,56 +185,7 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
         </div>
     </div>
     
-    <!-- Meta Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_META_PIXEL_ID');
-        fbq('track', 'Lead', {
-            'name': '${name}',
-            'phone': '${phone}'
-        });
-    </script>
-    <noscript>
-        <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=YOUR_META_PIXEL_ID&ev=Lead&noscript=1"/>
-    </noscript>
-    <!-- End Meta Pixel Code -->
-
-    <!-- Snap Pixel Code -->
-    <script type='text/javascript'>
-        (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
-        {a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
-        a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
-        r.src=n;var u=t.getElementsByTagName(s)[0];
-        u.parentNode.insertBefore(r,u);})(window,document,
-        'https://sc-static.net/scevent.min.js');
-        snaptr('init', 'YOUR_SNAP_PIXEL_ID', {
-            'name': '${name}',
-            'phone': '${phone}'
-        });
-        snaptr('track', 'PAGE_VIEW');
-    </script>
-    <!-- End Snap Pixel Code -->
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'YOUR_GA_ID', {
-            'user_id': '${phone}',
-            'name': '${name}'
-        });
-    </script>
-    <!-- End Google Analytics -->
+   
 </body>
 </html>
 `;
