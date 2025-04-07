@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
-import { Building2, MapPin, Shield, Home, Car, Wifi, Check, ChevronDown, X, Share2, PhoneIcon } from "lucide-react"
+import { Building2, MapPin, Shield, Home, Car, Wifi, Check, ChevronDown, X, Share2, PhoneIcon, Rotate3D, Plane, StoreIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -26,7 +26,7 @@ export default function LandingPage() {
     features: string[];
     onInquire: (modelName: string) => void; // Add this prop
   }
-  
+
   // Set RTL direction for Arabic content
   useEffect(() => {
     document.documentElement.dir = "rtl"
@@ -158,12 +158,12 @@ export default function LandingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     const newErrors: FormErrors = {};
     if (!formData.name) newErrors.name = 'الرجاء إدخال الاسم';
     if (!formData.phone || !/^05\d{8}$/.test(formData.phone)) newErrors.phone = 'الرجاء إدخال رقم هاتف صحيح';
-    if (!formData.message) newErrors.message = 'الرجاء إدخال الرسالة';
+    // if (!formData.message) newErrors.message = 'الرجاء إدخال الرسالة';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -197,7 +197,7 @@ export default function LandingPage() {
   const modelData = [
     {
       name: 'A',
-      price: '830,000 ريال',
+      price: 'ريال 830,000 ',
       area: '156 م²',
       rooms: 4,
       bathrooms: 4,
@@ -207,7 +207,7 @@ export default function LandingPage() {
     },
     {
       name: 'B',
-      price: '930,000 ريال',
+      price: 'ريال 930,000 ',
       area: '190 م²',
       rooms: 5,
       bathrooms: 4,
@@ -242,11 +242,11 @@ export default function LandingPage() {
     <div className="bg-white min-h-screen overflow-x-hidden text-slate-900 text-right" dir="rtl">
       {/* Modal */}
       {isModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
           onClick={() => setIsModalOpen(false)}
         >
-          <div 
+          <div
             className="bg-white rounded-lg p-6 w-full max-w-md relative"
             onClick={(e) => e.stopPropagation()}
           >
@@ -261,7 +261,7 @@ export default function LandingPage() {
             <h2 className="text-xl font-bold mb-4">تواصل مع مستشار المبيعات</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">الاسم</label>
+                <label className="block text-sm font-medium mb-1">الأسم (مطلوب)</label>
                 <input
                   type="text"
                   value={formData.name}
@@ -271,7 +271,7 @@ export default function LandingPage() {
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">رقم الهاتف</label>
+                <label className="block text-sm font-medium mb-1"> رقم الهاتف (مطلوب)</label>
                 <input
                   type="text"
                   value={formData.phone}
@@ -282,13 +282,16 @@ export default function LandingPage() {
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">الرسالة</label>
+                <label className="block text-sm font-medium mb-1">استفسارك (اختياري)</label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full p-2 border rounded-lg"
                   rows={4}
+                  placeholder="اكتب استفسارك هنا (اختياري)"
+                  required={false}
                 />
+                {/* Only show error if message validation is enabled */}
                 {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
               </div>
               <button
@@ -347,14 +350,12 @@ export default function LandingPage() {
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]/20">
               <div className="text-center mb-8">
-                <h3 className="text-[#34222e]">
-                  املأ النموذج وسيقوم مستشارنا العقاري بالتواصل معك
-                </h3>
+
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="block text-lg font-medium text-slate-700">الاسم</label>
+                  <label className="block text-lg font-medium text-slate-700">الأسم (مطلوب)</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -366,7 +367,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-lg font-medium text-slate-700">رقم الهاتف</label>
+                  <label className="block text-lg font-medium text-slate-700"> رقم الهاتف (مطلوب)</label>
                   <div className="relative">
                     <input
                       type="text"
@@ -385,13 +386,14 @@ export default function LandingPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-lg font-medium text-slate-700">الرسالة</label>
+                  <label className="block text-lg font-medium text-slate-700">استفسارك (اختياري)</label>
                   <textarea
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5 resize-none"
                     rows={4}
-                    placeholder="اكتب رسالتك هنا"
+                    placeholder="اكتب استفسارك هنا"
+                    required={false}
                   />
                   {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
                 </div>
@@ -403,9 +405,7 @@ export default function LandingPage() {
                   تواصل مع مستشار المبيعات
                 </button>
 
-                <p className="text-center text-slate-500 mt-6">
-                  سيتم الرد عليك في أقرب وقت ممكن
-                </p>
+
               </form>
             </div>
           </div>
@@ -471,10 +471,10 @@ export default function LandingPage() {
                 </motion.div>
               ))}
             </div>
-            
+
             {/* Navigation arrows for larger screens */}
             <div className="hidden md:block">
-              <button 
+              <button
                 className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
                 onClick={() => {
                   const container = document.querySelector('.overflow-x-auto');
@@ -485,7 +485,7 @@ export default function LandingPage() {
               >
                 <ChevronDown className="h-6 w-6 -rotate-90 text-[#c48765]" />
               </button>
-              <button 
+              <button
                 className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
                 onClick={() => {
                   const container = document.querySelector('.overflow-x-auto');
@@ -522,16 +522,34 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-4 flex-grow">
                 {[
-                  "موقع إستراتيجي قريب من الواجهة البحرية",
-                  "قريب من جميع الخدمات",
-                  "ضمانات تصل إلى 25 سنة",
-                  "مساحات تصل إلى 220م²",
-                  "مواقف سيارات مخصصة",
-                  "سمارت هوم"
+                  {
+                    text: "موقع إستراتيجي قريب من الواجهة البحرية",
+                    icon: <MapPin className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                  },
+                  {
+                    text: "قريب من جميع الخدمات",
+                    icon: <Building2 className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                  },
+                  {
+                    text: "ضمانات تصل إلى 25 سنة",
+                    icon: <Shield className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                  },
+                  {
+                    text: "مساحات تصل إلى 220م²",
+                    icon: <Home className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                  },
+                  {
+                    text: "مواقف سيارات مخصصة",
+                    icon: <Car className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                  },
+                  {
+                    text: "سمارت هوم",
+                    icon: <Wifi className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
+                  }
                 ].map((feature, index) => (
                   <li key={index} className="flex items-center p-4 bg-amber-50/50 rounded-xl hover:bg-amber-50 transition-all duration-200">
-                    <Check className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
-                    <span className="text-base">{feature}</span>
+                    {feature.icon}
+                    <span className="text-base">{feature.text}</span>
                   </li>
                 ))}
               </ul>
@@ -554,10 +572,41 @@ export default function LandingPage() {
                   <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
                     <h4 className="text-lg font-bold mb-4">قريب من:</h4>
                     <ul className="space-y-3">
-                      {["الشوارع الرئيسية", "المسجد", "الخدمات", "المراكز التجارية", "المطار"].map((item, index) => (
+                      {[
+                        {
+                          text: "الشوارع الرئيسية", icon:
+<svg 
+  fill="#c48765" 
+  className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0"
+  
+  version="1.1" 
+  id="Layer_1" 
+  xmlns="http://www.w3.org/2000/svg" 
+  xmlnsXlink="http://www.w3.org/1999/xlink" 
+  viewBox="0 0 512.00 512.00" 
+  xmlSpace="preserve" 
+  stroke="#c48765" 
+  transform="rotate(0)"
+>
+  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+  <g id="SVGRepo_iconCarrier">
+    <g>
+      <g>
+        <path d="M366.933,0h-102.4v25.6c0,4.719-3.823,8.533-8.533,8.533c-4.71,0-8.533-3.814-8.533-8.533V0h-102.4 c-4.71,0-8.533,3.814-8.533,8.533v494.933c0,4.719,3.823,8.533,8.533,8.533h102.4v-25.6c0-4.719,3.823-8.533,8.533-8.533 c4.71,0,8.533,3.814,8.533,8.533V512h102.4c4.71,0,8.533-3.814,8.533-8.533V8.533C375.467,3.814,371.644,0,366.933,0z M196.267,307.2c0,4.719-3.823,8.533-8.533,8.533s-8.533-3.814-8.533-8.533V204.8c0-4.719,3.823-8.533,8.533-8.533 s8.533,3.814,8.533,8.533V307.2z M230.4,307.2c0,4.719-3.823,8.533-8.533,8.533c-4.71,0-8.533-3.814-8.533-8.533V204.8 c0-4.719,3.823-8.533,8.533-8.533c4.71,0,8.533,3.814,8.533,8.533V307.2z M264.533,441.6c0,4.719-3.823,8.533-8.533,8.533 c-4.71,0-8.533-3.814-8.533-8.533v-29.867c0-4.719,3.823-8.533,8.533-8.533c4.71,0,8.533,3.814,8.533,8.533V441.6z M264.533,366.933c0,4.719-3.823,8.533-8.533,8.533c-4.71,0-8.533-3.814-8.533-8.533v-17.067c0-4.719,3.823-8.533,8.533-8.533 c4.71,0,8.533,3.814,8.533,8.533V366.933z M264.533,307.2c0,4.719-3.823,8.533-8.533,8.533c-4.71,0-8.533-3.814-8.533-8.533V204.8 c0-4.719,3.823-8.533,8.533-8.533c4.71,0,8.533,3.814,8.533,8.533V307.2z M264.533,162.133c0,4.719-3.823,8.533-8.533,8.533 c-4.71,0-8.533-3.814-8.533-8.533v-17.067c0-4.719,3.823-8.533,8.533-8.533c4.71,0,8.533,3.814,8.533,8.533V162.133z M264.533,100.267c0,4.719-3.823,8.533-8.533,8.533c-4.71,0-8.533-3.814-8.533-8.533V70.4c0-4.719,3.823-8.533,8.533-8.533 c4.71,0,8.533,3.814,8.533,8.533V100.267z M298.667,307.2c0,4.719-3.823,8.533-8.533,8.533c-4.71,0-8.533-3.814-8.533-8.533V204.8 c0-4.719,3.823-8.533,8.533-8.533c4.71,0,8.533,3.814,8.533,8.533V307.2z M332.8,307.2c0,4.719-3.823,8.533-8.533,8.533 s-8.533-3.814-8.533-8.533V204.8c0-4.719,3.823-8.533,8.533-8.533s8.533,3.814,8.533,8.533V307.2z"></path>
+      </g>
+    </g>
+  </g>
+</svg>
+                        },
+                        { text: "مسجد قريب", icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" enable-background="new 0 0 24 24" viewBox="0 0 24 24" fill="currentColor"><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M7,8h10c0.29,0,0.57,0.06,0.84,0.13C17.93,7.8,18,7.46,18,7.09c0-1.31-0.65-2.53-1.74-3.25L12,1L7.74,3.84 C6.65,4.56,6,5.78,6,7.09C6,7.46,6.07,7.8,6.16,8.13C6.43,8.06,6.71,8,7,8z" /><path d="M24,7c0-1.1-2-3-2-3s-2,1.9-2,3c0,0.74,0.4,1.38,1,1.72V13h-2v-2c0-1.1-0.9-2-2-2H7c-1.1,0-2,0.9-2,2v2H3V8.72 C3.6,8.38,4,7.74,4,7c0-1.1-2-3-2-3S0,5.9,0,7c0,0.74,0.4,1.38,1,1.72V21h9v-4c0-1.1,0.9-2,2-2s2,0.9,2,2v4h9V8.72 C23.6,8.38,24,7.74,24,7z" /></g></g></svg> },
+                        { text: "الخدمات", icon: <StoreIcon className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" /> },
+                        { text: "المراكز التجارية", icon: <Building2 className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" /> },
+                        { text: "المطار", icon: <Plane className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" /> }
+                      ].map((item, index) => (
                         <li key={index} className="flex items-center">
-                          <Check className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
-                          <span className="text-base">{item}</span>
+                          {item.icon}
+                          <span className="text-base">{item.text}</span>
                         </li>
                       ))}
                     </ul>
@@ -565,12 +614,55 @@ export default function LandingPage() {
                   <div className="bg-amber-50/50 p-6 rounded-xl hover:bg-amber-50 transition-all duration-200">
                     <h4 className="text-lg font-bold mb-4">دقائق من:</h4>
                     <ul className="space-y-3">
-                      {["طريق الأمير سلطان", "شارع حراء"].map((item, index) => (
-                        <li key={index} className="flex items-center">
-                          <Check className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0" />
-                          <span className="text-base">{item}</span>
-                        </li>
-                      ))}
+                      {[
+                        {
+                          text: "طريق الأمير سلطان",
+                          icon: (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M4 19L8 19" />
+                              <path d="M12 19L20 19" />
+                              <path d="M4 15L20 15" />
+                              <path d="M4 11L20 11" />
+                              <path d="M4 7L20 7" />
+                              <path d="M4 3L20 3" />
+                            </svg>
+                          ),
+                        },
+                        {
+                          text: "شارع حراء",
+                          icon: (
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-[#c48765] ml-3 flex-shrink-0"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor" 
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M3 3L21 21" />
+                              <path d="M21 3L3 21" />
+                              <rect x="7" y="7" width="10" height="10" />
+                              <path d="M12 7V17" />
+                              <path d="M7 12H17" />
+                            </svg>
+                          ),
+                        }].map((item, index) => (
+                          <li key={index} className="flex items-center">
+                            {item.icon}
+                            <span className="text-base">{item.text}</span>
+                          </li>
+                        ))}
                     </ul>
                   </div>
                 </div>
@@ -591,7 +683,7 @@ export default function LandingPage() {
               <div className="w-20 h-1 bg-[#c48765] mx-auto mt-4"></div>
             </div>
 
-            <div 
+            <div
               className="relative aspect-video max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-100 cursor-pointer"
               onClick={() => setVideoModalOpen(true)}
             >
@@ -686,7 +778,7 @@ export default function LandingPage() {
           >
             <Tabs defaultValue="model-a" className="w-full">
               <TabsList className="grid grid-cols-4 mb-6 bg-slate-100 p-1 rounded-full w-full ">
-                {["A","B", "C" ,"D"].map((model, index) => (
+                {["A", "B", "C", "D"].map((model, index) => (
                   <TabsTrigger
                     key={index}
                     value={`model-${model.toLowerCase()}`}
@@ -920,9 +1012,12 @@ export default function LandingPage() {
               <CardContent className="p-4 bg-white">
                 <Button
                   onClick={() => openWhatsApp()}
-                  className="w-full bg-[#34222e] hover:from-[#34222e] hover:to-[#1d0728] text-white py-3 rounded-full shadow-lg"
+                  className="w-full bg-[#34222e] hover:from-[#34222e] hover:to-[#1d0728] text-white py-3 rounded-full shadow-lg flex items-center justify-center gap-2"
                 >
-                  تواصل معنا الآن
+
+تواصل معنا الان عبر واتساب                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
                 </Button>
 
                 <div className="text-center mt-4 text-sm text-slate-500">أو اتصل بنا مباشرة</div>
@@ -931,8 +1026,9 @@ export default function LandingPage() {
                   href="tel:0536667967"
                   className="flex items-center justify-center gap-2 mt-2 p-3 border border-[#1d0728] rounded-md text-[#c48765] font-medium"
                 >
-            <PhoneIcon className="w-4 h-4" />
+
                   0536667967
+                  <PhoneIcon className="w-4 h-4" />
                 </a>
               </CardContent>
             </Card>
@@ -953,13 +1049,21 @@ export default function LandingPage() {
             <div className="container mx-auto flex items-center justify-between">
               <div>
                 <div className="text-sm font-bold">السعر يبدأ من</div>
-                <div className="text-lg font-bold text-[#c48765]">﷼ 830000 </div>
+                <div className="text-xl font-bold text-[#34222e] flex items-center gap-1">
+                  830,000
+                  <Image src="/riyal.svg" alt="ريال" width={40} height={40} className="ml-1" />
+
+                </div>
               </div>
               <Button
                 onClick={() => openWhatsApp()}
-                className="bg-[#34222e] text-white px-6 py-2 rounded-full shadow-md"
+                className="bg-[#34222e] text-white px-6 py-2 rounded-full shadow-md flex items-center gap-2"
               >
+
                 احجز الآن
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
               </Button>
             </div>
           </motion.div>
@@ -1028,35 +1132,35 @@ export default function LandingPage() {
               <div className="p-6">
                 <div className="grid grid-cols-4 gap-4 mb-6">
                   {[
-                    { 
-                      name: "واتساب", 
-                      color: "#c48765", 
+                    {
+                      name: "واتساب",
+                      color: "#c48765",
                       icon: "whatsapp.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة\n\nاستفسر الآن عن مشروع 24 في حي الزهراء\n" + window.location.href);
                         window.open(`https://wa.me/?text=${shareText}`, "_blank");
                       }
                     },
-                    { 
-                      name: "تويتر", 
-                      color: "#d68c3c", 
+                    {
+                      name: "تويتر",
+                      color: "#d68c3c",
                       icon: "twitter.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة");
                         window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(window.location.href)}`, "_blank");
                       }
                     },
-                    { 
-                      name: "فيسبوك", 
-                      color: "#34222e", 
+                    {
+                      name: "فيسبوك",
+                      color: "#34222e",
                       icon: "facebook.svg",
                       action: () => {
                         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, "_blank");
                       }
                     },
-                    { 
-                      name: "تلجرام", 
-                      color: "#1d0728", 
+                    {
+                      name: "تلجرام",
+                      color: "#1d0728",
                       icon: "telegram.svg",
                       action: () => {
                         const shareText = encodeURIComponent("مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة");
@@ -1064,8 +1168,8 @@ export default function LandingPage() {
                       }
                     },
                   ].map((platform, index) => (
-                    <button 
-                      key={index} 
+                    <button
+                      key={index}
                       className="flex flex-col items-center"
                       onClick={() => {
                         platform.action();
@@ -1253,13 +1357,19 @@ export default function LandingPage() {
           <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-100">
             <div>
               <div className="text-xs text-slate-500">السعر يبدأ من</div>
-              <div className="text-xl font-bold text-[#34222e]"> ريال {price}</div>
+              <div className="text-xl font-bold text-[#34222e] flex items-center gap-1">
+                <Image src="/riyal.svg" alt="ريال" width={35} height={35} className="ml-1" />
+                {price}
+              </div>
             </div>
             <Button
               size="sm"
-              className="bg-[#c48765] hover:bg-[#34222e] text-white px-6"
+              className="bg-[#c48765] hover:bg-[#34222e] text-white px-6 flex items-center gap-2"
               onClick={() => onInquire(title)}
             >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
               استفسار عبر واتساب
             </Button>
           </div>
