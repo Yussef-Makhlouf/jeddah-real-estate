@@ -13,6 +13,10 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import emailjs from '@emailjs/browser'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { trackFBEvent } from './components/FacebookPixel';
+import { trackSnapEvent } from './components/SnapchatPixel';
+import { trackTikTokEvent } from './components/TikTokPixel';
+import { pushToDataLayer } from './components/GoogleTagManager';
 // import nodemailer from 'nodemailer';
 
 // Create a transporter object
@@ -80,6 +84,22 @@ export default function LandingPage() {
   // Function to open WhatsApp with a pre-filled message
   const openWhatsApp = (modelName: string = "") => {
     const message = encodeURIComponent(` استفسر بخصوص مشروع 24${modelName ? ` - نموذج ${modelName}` : ""}`)
+    
+    const eventData = {
+      content_name: 'WhatsApp Contact',
+      content_category: modelName || 'General',
+      platform: platform
+    };
+
+    // Track WhatsApp click across all platforms
+    trackFBEvent('Contact', eventData);
+    trackSnapEvent('CONTACT', eventData);
+    trackTikTokEvent('Contact', eventData);
+    pushToDataLayer({
+      event: 'whatsapp_click',
+      ...eventData
+    });
+    
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank")
   }
 
@@ -201,13 +221,36 @@ export default function LandingPage() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          message: formData.message
+          message: formData.message,
+          source: platform
         }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to send email');
       }
+
+      // Track form submission across all platforms
+      const eventData = {
+        content_name: 'مشروع 24 - نموذج الاتصال',
+        status: 'success',
+        platform: platform
+      };
+
+      // Facebook Pixel
+      trackFBEvent('Lead', eventData);
+
+      // Snapchat Pixel
+      trackSnapEvent('SIGN_UP', eventData);
+
+      // TikTok Pixel
+      trackTikTokEvent('Form', eventData);
+
+      // Google Tag Manager
+      pushToDataLayer({
+        event: 'form_submission',
+        ...eventData
+      });
 
       // Show success toast
       toast.success('تم إرسال استفسارك بنجاح! سنتواصل معك قريباً', {
