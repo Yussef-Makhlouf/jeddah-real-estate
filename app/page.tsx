@@ -441,84 +441,81 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative bg-[#34222e]/5 py-32 overflow-hidden">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-[#ffff] mb-6">
-        امتلك منزل العمر في جدة
-      </h1>
-      <h2 className="text-2xl md:text-3xl text-[#ffff] font-medium mb-4">
-        مشروع 24-حي الزهراء
-      </h2>
+        <div className="absolute inset-0 bg-black/60"></div> {/* Added dark overlay */}
+        <div className="container mx-auto px-4 relative"> {/* Added relative positioning */}
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold text-[#FFD700] mb-6">
+              امتلك منزل العمر في جدة
+            </h1>
+            <h2 className="text-2xl md:text-3xl text-[#ffff] font-medium mb-4">
+              مشروع 24-حي الزهراء
+            </h2>
             <p className="text-2xl md:text-3xl text-[#ffff] font-bold">
-        بأسعار تبدأ من 830,000 ريال فقط
-      </p>
-    </div>
+              بأسعار تبدأ من 830,000 <Image src="/riyal.svg" alt="ريال" width={40} height={50} className="inline  invert" /> فقط
+            </p>
+          </div>
 
-    <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-[#34222e]/20">
-        <div className="text-center mb-8">
-      
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-                  <label className="block text-lg font-medium text-slate-700">الأسم (مطلوب)</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
-              placeholder="الاسم الكامل"
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
-          </div>
-
-          <div className="space-y-2">
-                  <label className="block text-lg font-medium text-slate-700"> رقم الهاتف (مطلوب)</label>
-            <div className="relative">
-              <input
-                type="text"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
-                placeholder="05XXXXXXXX"
-              />
-              <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+              <div className="text-center mb-8">
               </div>
-            </div>
-            {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
-          </div>
 
-          <div className="space-y-2">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="block text-lg font-medium text-slate-700">الأسم (مطلوب)</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
+                    placeholder="الاسم الكامل"
+                  />
+                  {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-lg font-medium text-slate-700"> رقم الهاتف (مطلوب)</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5"
+                      placeholder="05XXXXXXXX"
+                    />
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#c48765]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                  </div>
+                  {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
+                </div>
+
+                <div className="space-y-2">
                   <label className="block text-lg font-medium text-slate-700">استفسارك (اختياري)</label>
-            <textarea
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  <textarea
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full p-4 text-lg border-2 rounded-2xl bg-[#34222e]/5 resize-none"
-              rows={4}
+                    rows={4}
                     placeholder="اكتب استفسارك هنا"
                     required={false}
-            />
-            {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
-          </div>
+                  />
+                  {errors.message && <p className="text-red-500 text-sm mt-2">{errors.message}</p>}
+                </div>
 
-          <button
-            type="submit"
+                <button
+                  type="submit"
                   className="w-full bg-[#34222e] text-white py-4 rounded-2xl text-xl font-medium hover:from-[#34222e] hover:to-[#1d0728] transition-all duration-300"
-          >
-            تواصل مع مستشار المبيعات
-          </button>
-
-
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
+                >
+                  تواصل مع مستشار المبيعات
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Quick Stats */}
       {/* <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
@@ -1164,7 +1161,7 @@ export default function LandingPage() {
               </div>
               <Button
                 onClick={() => openWhatsApp()}
-                className="bg-[#34222e] text-white px-6 py-2 rounded-full shadow-md flex items-center gap-2"
+                className="bg-[#10721d] text-white px-6 py-2 rounded-full shadow-md flex items-center gap-2"
               >
 
                 احجز الآن
