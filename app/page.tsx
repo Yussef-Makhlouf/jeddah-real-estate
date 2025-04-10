@@ -1116,7 +1116,7 @@ export default function LandingPage() {
               <CardContent className="p-4 bg-white">
                 <Button
                   onClick={() => openWhatsApp()}
-                  className="w-full bg-[#34222e] hover:from-[#34222e] hover:to-[#1d0728] text-white py-3 rounded-full shadow-lg flex items-center justify-center gap-2"
+                  className="w-full bg-[#10721d] hover:from-[#34222e] hover:to-[#1d0728] text-white py-3 rounded-full shadow-lg flex items-center justify-center gap-2"
                 >
 
 تواصل معنا الان عبر واتساب                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
