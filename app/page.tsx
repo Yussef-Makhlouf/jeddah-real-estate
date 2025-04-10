@@ -340,7 +340,7 @@ export default function LandingPage() {
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden text-slate-900 text-right" dir="rtl" style={{
-      backgroundImage: 'url("/background1.png")',
+      backgroundImage: 'url("/1.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
@@ -443,13 +443,13 @@ export default function LandingPage() {
       <section className="relative bg-[#34222e]/5 py-32 overflow-hidden">
   <div className="container mx-auto px-4">
     <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-[#34222e] mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-[#ffff] mb-6">
         امتلك منزل العمر في جدة
       </h1>
-      <h2 className="text-2xl md:text-3xl text-[#34222e] font-medium mb-4">
+      <h2 className="text-2xl md:text-3xl text-[#ffff] font-medium mb-4">
         مشروع 24-حي الزهراء
       </h2>
-            <p className="text-2xl md:text-3xl text-[#34222e] font-bold">
+            <p className="text-2xl md:text-3xl text-[#ffff] font-bold">
         بأسعار تبدأ من 830,000 ريال فقط
       </p>
     </div>
