@@ -446,7 +446,7 @@ export default function LandingPage() {
             <h1 className="text-5xl md:text-6xl font-bold text-[#34222e] mb-6">
         امتلك منزل العمر في جدة
       </h1>
-      <h2 className="text-2xl md:text-3xl text-slate-700 font-medium mb-4">
+      <h2 className="text-2xl md:text-3xl text-[#34222e] font-medium mb-4">
         مشروع 24-حي الزهراء
       </h2>
             <p className="text-2xl md:text-3xl text-[#34222e] font-bold">
