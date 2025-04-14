@@ -83,32 +83,23 @@ export default function LandingPage() {
 
   // Function to open WhatsApp with a pre-filled message
   const openWhatsApp = (modelName: string = "") => {
-    const message = encodeURIComponent(` استفسر بخصوص مشروع 24${modelName ? ` - نموذج ${modelName}` : ""}`)
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
-    const timestamp = new Date().toISOString();
+    // Get the clicked element
+    const clickedElement = document.activeElement;
+    const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     
-    const eventData = {
-      event_time: timestamp,
-      content_name: 'WhatsApp Contact',
-      content_category: modelName || 'General',
-      platform: platform,
-      whatsapp_number: whatsappNumber,
-      whatsapp_message: message,
-      whatsapp_url: whatsappUrl,
-      page_location: window.location.href,
-      page_title: document.title,
-      interaction_type: 'WhatsApp Click',
-      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
-      source: document.referrer || 'direct'
-    };
-
-    trackFBEvent('Contact', eventData);
-    trackSnapEvent('CONTACT', eventData);
-    trackTikTokEvent('Contact', eventData);
-    trackGoogleEvent('Contact', eventData);
+    // Enhanced GTM tracking with more details
     pushToDataLayer({
       event: 'whatsapp_click',
-      ...eventData
+      url: whatsappUrl,
+      click_classes: clickedElement?.className || '',
+      click_element: clickedElement?.tagName?.toLowerCase() || '',
+      click_id: clickedElement?.id || '',
+      click_text: clickedElement?.textContent?.trim() || '',
+      click_url: (clickedElement as HTMLAnchorElement)?.href || whatsappUrl,
+      model_name: modelName || 'general_inquiry',
+      element_type: 'whatsapp_button',
+      page_location: window.location.href,
+      timestamp: new Date().toISOString()
     });
     
     window.open(whatsappUrl, "_blank")
