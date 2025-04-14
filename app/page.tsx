@@ -10,13 +10,13 @@ import { motion, AnimatePresence } from "framer-motion"
 import image from "next/image"
 import Link from "next/link"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import emailjs from '@emailjs/browser'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { trackFBEvent } from './components/FacebookPixel';
 import { trackSnapEvent } from './components/SnapchatPixel';
 import { trackTikTokEvent } from './components/TikTokPixel';
 import { pushToDataLayer } from './components/GoogleTagManager';
+import { trackGoogleEvent } from './components/GoogleAnalytics';
 // import nodemailer from 'nodemailer';
 
 // Create a transporter object
@@ -84,23 +84,34 @@ export default function LandingPage() {
   // Function to open WhatsApp with a pre-filled message
   const openWhatsApp = (modelName: string = "") => {
     const message = encodeURIComponent(` استفسر بخصوص مشروع 24${modelName ? ` - نموذج ${modelName}` : ""}`)
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+    const timestamp = new Date().toISOString();
     
     const eventData = {
+      event_time: timestamp,
       content_name: 'WhatsApp Contact',
       content_category: modelName || 'General',
-      platform: platform
+      platform: platform,
+      whatsapp_number: whatsappNumber,
+      whatsapp_message: message,
+      whatsapp_url: whatsappUrl,
+      page_location: window.location.href,
+      page_title: document.title,
+      interaction_type: 'WhatsApp Click',
+      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      source: document.referrer || 'direct'
     };
 
-    // Track WhatsApp click across all platforms
     trackFBEvent('Contact', eventData);
     trackSnapEvent('CONTACT', eventData);
     trackTikTokEvent('Contact', eventData);
+    trackGoogleEvent('Contact', eventData);
     pushToDataLayer({
       event: 'whatsapp_click',
       ...eventData
     });
     
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank")
+    window.open(whatsappUrl, "_blank")
   }
 
   // Function to share the project
@@ -337,6 +348,33 @@ export default function LandingPage() {
       description: 'هذا النموذج يتميز بتصميم عصري ومساحات واسعة تناسب العائلات الكبيرة، مع إطلالة مميزة على الحديقة الخلفية.'
     }
   ];
+
+  // Add phone tracking function
+  const handlePhoneClick = () => {
+    const timestamp = new Date().toISOString();
+    const eventData = {
+      event_time: timestamp,
+      content_name: 'Phone Call',
+      content_category: 'Contact',
+      platform: platform,
+      phone_number: '0536667967',
+      phone_url: 'tel:0536667967',
+      page_location: window.location.href,
+      page_title: document.title,
+      interaction_type: 'Phone Click',
+      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      source: document.referrer || 'direct'
+    };
+
+    trackFBEvent('Contact', eventData);
+    trackSnapEvent('CONTACT', eventData);
+    trackTikTokEvent('Contact', eventData);
+    trackGoogleEvent('Contact', eventData);
+    pushToDataLayer({
+      event: 'phone_click',
+      ...eventData
+    });
+  };
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden text-slate-900 text-right" dir="rtl" style={{
@@ -1129,10 +1167,10 @@ export default function LandingPage() {
 
                 <a
                   href="tel:0536667967"
+                  onClick={handlePhoneClick}
                   className="flex items-center justify-center gap-2 mt-2 p-3 border border-[#1d0728] rounded-md text-[#c48765] font-medium"
                   id="call-cta-button"
                 >
-
                   0536667967
                   <PhoneIcon className="w-4 h-4" />
                 </a>
