@@ -82,24 +82,52 @@ export default function LandingPage() {
   const whatsappNumber = "966536667967" // Replace with actual number without +
 
   // Function to open WhatsApp with a pre-filled message
-  const openWhatsApp = (modelName: string = "") => {
-    // Get the clicked element
-    const clickedElement = document.activeElement;
+  const openWhatsApp = (modelName: string = "", event?: React.MouseEvent<HTMLElement>) => {
+    // Get the clicked element from the event or active element
+    const clickedElement = (event?.target as HTMLElement) || document.activeElement;
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     
-    // Enhanced GTM tracking with more details
+    // Find the closest button or anchor parent
+    const closestButton = clickedElement?.closest('button, a');
+    
+    // Get the form if the element is within a form
+    const form = clickedElement?.closest('form');
+    
+    // Enhanced GTM tracking with complete details
     pushToDataLayer({
       event: 'whatsapp_click',
       url: whatsappUrl,
-      click_classes: clickedElement?.className || '',
+      // Click details
+      click_classes: clickedElement?.classList?.toString() || '',
       click_element: clickedElement?.tagName?.toLowerCase() || '',
-      click_id: clickedElement?.id || '',
-      click_text: clickedElement?.textContent?.trim() || '',
-      click_url: (clickedElement as HTMLAnchorElement)?.href || whatsappUrl,
+      click_id: clickedElement?.id || closestButton?.id || '',
+      click_text: clickedElement?.textContent?.trim() || closestButton?.textContent?.trim() || '',
+      click_target: clickedElement?.getAttribute('target') || closestButton?.getAttribute('target') || '_blank',
+      click_url: (closestButton as HTMLAnchorElement)?.href || whatsappUrl,
+      
+      // Form details (if within a form)
+      form_classes: form?.classList?.toString() || '',
+      form_element: form?.tagName?.toLowerCase() || '',
+      form_id: form?.id || '',
+      form_target: form?.getAttribute('target') || '',
+      form_text: form?.textContent?.trim() || '',
+      form_url: form?.action || '',
+      
+      // Additional context
       model_name: modelName || 'general_inquiry',
       element_type: 'whatsapp_button',
       page_location: window.location.href,
-      timestamp: new Date().toISOString()
+      page_title: document.title,
+      timestamp: new Date().toISOString(),
+      
+      // Button context
+      button_text: closestButton?.textContent?.trim() || '',
+      button_type: closestButton?.getAttribute('type') || 'button',
+      button_classes: closestButton?.classList?.toString() || '',
+      
+      // Interaction details
+      interaction_type: 'whatsapp_click',
+      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop'
     });
     
     window.open(whatsappUrl, "_blank")
@@ -1144,7 +1172,7 @@ export default function LandingPage() {
               </div>
               <CardContent className="p-4 bg-white">
                 <Button
-                  onClick={() => openWhatsApp()}
+                  onClick={(e) => openWhatsApp('', e)}
                   className="w-full bg-[#10721d] hover:from-[#34222e] hover:to-[#1d0728] text-white py-3 rounded-full shadow-lg flex items-center justify-center gap-2"
                   id="whatsapp-cta-button"
                 >
@@ -1191,7 +1219,7 @@ export default function LandingPage() {
                 </div>
               </div>
               <Button
-                onClick={() => openWhatsApp()}
+                onClick={(e) => openWhatsApp('', e)}
                 className="bg-[#10721d] text-white px-6 py-2 rounded-full shadow-md flex items-center gap-2"
                 id="whatsapp-sticky-button"
               >
@@ -1501,7 +1529,7 @@ export default function LandingPage() {
             <Button
               size="sm"
               className="bg-[#c48765] hover:bg-[#34222e] text-white px-6 flex items-center gap-2"
-              onClick={() => onInquire(title)}
+              onClick={(e) => onInquire(title)}
               id="whatsapp-cta-button"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
