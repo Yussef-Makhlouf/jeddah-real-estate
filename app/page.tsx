@@ -81,74 +81,107 @@ export default function LandingPage() {
   // WhatsApp phone number
   const whatsappNumber = "966536667967" // Replace with actual number without +
 
-  // Function to open WhatsApp with a pre-filled message
+  // Function to track WhatsApp click event
+  const trackWhatsAppClick = (modelName: string = "", event?: React.MouseEvent<HTMLElement>) => {
+    try {
+      // Get the clicked element from the event
+      const clickedElement = event?.target as HTMLElement;
+      const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+      
+      // Get timestamp
+      const timestamp = new Date().toISOString();
+      
+      // Find the closest button or anchor parent with null checks
+      const closestButton = clickedElement?.closest('button, a');
+      
+      // Get the form if the element is within a form
+      const form = clickedElement?.closest('form');
+      
+      // Enhanced GTM tracking with complete details and null checks
+      const eventData = {
+        event: 'whatsapp_click',
+        event_time: timestamp || '',
+        content_name: 'WhatsApp Click',
+        content_category: 'Contact',
+        platform: platform || 'unknown',
+        whatsapp_number: whatsappNumber || '',
+        whatsapp_url: whatsappUrl || '',
+        page_location: window.location.href || '',
+        page_title: document.title || '',
+        interaction_type: 'WhatsApp Button Click',
+        device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+        source: document.referrer || 'direct',
+        
+        // Click details with null checks
+        click_classes: clickedElement?.classList?.toString() || '',
+        click_element: clickedElement?.tagName?.toLowerCase() || '',
+        click_id: clickedElement?.id || closestButton?.id || '',
+        click_text: clickedElement?.textContent?.trim() || closestButton?.textContent?.trim() || '',
+        click_target: clickedElement?.getAttribute('target') || closestButton?.getAttribute('target') || '_blank',
+        click_url: (closestButton as HTMLAnchorElement)?.href || whatsappUrl || '',
+        
+        // Form details with null checks
+        form_classes: form?.classList?.toString() || '',
+        form_element: form?.tagName?.toLowerCase() || '',
+        form_id: form?.id || '',
+        form_target: form?.getAttribute('target') || '',
+        form_text: form?.textContent?.trim() || '',
+        form_url: form?.action || '',
+        
+        // Button context with null checks
+        button_text: closestButton?.textContent?.trim() || '',
+        button_type: closestButton?.getAttribute('type') || 'button',
+        button_classes: closestButton?.classList?.toString() || '',
+        
+        // Additional context
+        model_name: modelName || 'general_inquiry',
+        element_type: 'whatsapp_button',
+        
+        // Debug information
+        debug_timestamp: new Date().getTime(),
+        debug_user_agent: navigator.userAgent,
+        debug_platform: navigator.platform,
+        debug_screen_size: `${window.innerWidth}x${window.innerHeight}`
+      };
+
+      // Log the event data for debugging
+      console.log('WhatsApp Click Event Data:', eventData);
+
+      // Track across all platforms with error handling
+      try {
+        trackFBEvent('Contact', eventData);
+        trackSnapEvent('CONTACT', eventData);
+        trackTikTokEvent('Contact', eventData);
+        trackGoogleEvent('Contact', eventData);
+        
+        // Push to GTM with complete data
+        pushToDataLayer(eventData);
+      } catch (trackingError) {
+        console.error('Error tracking event:', trackingError);
+      }
+
+    } catch (error) {
+      console.error('Error in trackWhatsAppClick:', error);
+      
+      // Send minimal event data in case of error
+      const fallbackEventData = {
+        event: 'whatsapp_click_error',
+        error_message: error.message,
+        timestamp: new Date().toISOString()
+      };
+      pushToDataLayer(fallbackEventData);
+    }
+  }
+
+  // Function to open WhatsApp chat in a new tab
   const openWhatsApp = (modelName: string = "", event?: React.MouseEvent<HTMLElement>) => {
-    // Get the clicked element from the event or active element
-    const clickedElement = (event?.target as HTMLElement) || document.activeElement;
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     
-    // Get timestamp
-    const timestamp = new Date().toISOString();
+    // First track the click
+    trackWhatsAppClick(modelName, event);
     
-    // Find the closest button or anchor parent
-    const closestButton = clickedElement?.closest('button, a');
-    
-    // Get the form if the element is within a form
-    const form = clickedElement?.closest('form');
-    
-    // Enhanced GTM tracking with complete details
-    const eventData = {
-      event_time: timestamp,
-      content_name: 'WhatsApp Click',
-      content_category: 'Contact',
-      platform: platform,
-      whatsapp_number: whatsappNumber,
-      whatsapp_url: whatsappUrl,
-      page_location: window.location.href,
-      page_title: document.title,
-      interaction_type: 'WhatsApp Click',
-      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
-      source: document.referrer || 'direct',
-      
-      // Click details
-      click_classes: clickedElement?.classList?.toString() || '',
-      click_element: clickedElement?.tagName?.toLowerCase() || '',
-      click_id: clickedElement?.id || closestButton?.id || '',
-      click_text: clickedElement?.textContent?.trim() || closestButton?.textContent?.trim() || '',
-      click_target: clickedElement?.getAttribute('target') || closestButton?.getAttribute('target') || '_blank',
-      click_url: (closestButton as HTMLAnchorElement)?.href || whatsappUrl,
-      
-      // Form details (if within a form)
-      form_classes: form?.classList?.toString() || '',
-      form_element: form?.tagName?.toLowerCase() || '',
-      form_id: form?.id || '',
-      form_target: form?.getAttribute('target') || '',
-      form_text: form?.textContent?.trim() || '',
-      form_url: form?.action || '',
-      
-      // Button context
-      button_text: closestButton?.textContent?.trim() || '',
-      button_type: closestButton?.getAttribute('type') || 'button',
-      button_classes: closestButton?.classList?.toString() || '',
-      
-      // Additional context
-      model_name: modelName || 'general_inquiry',
-      element_type: 'whatsapp_button'
-    };
-
-    // Track across all platforms
-    trackFBEvent('Contact', eventData);
-    trackSnapEvent('CONTACT', eventData);
-    trackTikTokEvent('Contact', eventData);
-    trackGoogleEvent('Contact', eventData);
-    
-    // Push to GTM
-    pushToDataLayer({
-      event: 'whatsapp_click',
-      ...eventData
-    });
-    
-    window.open(whatsappUrl, "_blank")
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank");
   }
 
   // Function to share the project
