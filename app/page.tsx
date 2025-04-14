@@ -1562,4 +1562,3 @@ export default function LandingPage() {
   }
 }
 
-ritten_file>
