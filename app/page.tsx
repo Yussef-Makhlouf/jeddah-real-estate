@@ -87,6 +87,9 @@ export default function LandingPage() {
     const clickedElement = (event?.target as HTMLElement) || document.activeElement;
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     
+    // Get timestamp
+    const timestamp = new Date().toISOString();
+    
     // Find the closest button or anchor parent
     const closestButton = clickedElement?.closest('button, a');
     
@@ -94,9 +97,19 @@ export default function LandingPage() {
     const form = clickedElement?.closest('form');
     
     // Enhanced GTM tracking with complete details
-    pushToDataLayer({
-      event: 'whatsapp_click',
-      url: whatsappUrl,
+    const eventData = {
+      event_time: timestamp,
+      content_name: 'WhatsApp Click',
+      content_category: 'Contact',
+      platform: platform,
+      whatsapp_number: whatsappNumber,
+      whatsapp_url: whatsappUrl,
+      page_location: window.location.href,
+      page_title: document.title,
+      interaction_type: 'WhatsApp Click',
+      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      source: document.referrer || 'direct',
+      
       // Click details
       click_classes: clickedElement?.classList?.toString() || '',
       click_element: clickedElement?.tagName?.toLowerCase() || '',
@@ -113,21 +126,26 @@ export default function LandingPage() {
       form_text: form?.textContent?.trim() || '',
       form_url: form?.action || '',
       
-      // Additional context
-      model_name: modelName || 'general_inquiry',
-      element_type: 'whatsapp_button',
-      page_location: window.location.href,
-      page_title: document.title,
-      timestamp: new Date().toISOString(),
-      
       // Button context
       button_text: closestButton?.textContent?.trim() || '',
       button_type: closestButton?.getAttribute('type') || 'button',
       button_classes: closestButton?.classList?.toString() || '',
       
-      // Interaction details
-      interaction_type: 'whatsapp_click',
-      device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop'
+      // Additional context
+      model_name: modelName || 'general_inquiry',
+      element_type: 'whatsapp_button'
+    };
+
+    // Track across all platforms
+    trackFBEvent('Contact', eventData);
+    trackSnapEvent('CONTACT', eventData);
+    trackTikTokEvent('Contact', eventData);
+    trackGoogleEvent('Contact', eventData);
+    
+    // Push to GTM
+    pushToDataLayer({
+      event: 'whatsapp_click',
+      ...eventData
     });
     
     window.open(whatsappUrl, "_blank")
@@ -1543,3 +1561,5 @@ export default function LandingPage() {
     )
   }
 }
+
+ritten_file>
