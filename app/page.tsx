@@ -1501,6 +1501,7 @@ export default function LandingPage() {
                   <div className="text-xs text-slate-500">المساحة</div>
                   <div className="text-sm font-semibold text-slate-800">{area} م²</div>
                 </div>
+                
               </div>
               <div className="flex items-center bg-slate-50 p-3 rounded-lg border border-slate-100" dir="rtl">
                 <Building2 className="h-6 w-6 text-[#c48765] ml-2" />
