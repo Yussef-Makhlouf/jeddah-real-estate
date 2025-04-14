@@ -84,92 +84,57 @@ export default function LandingPage() {
   // Function to track WhatsApp click event
   const trackWhatsAppClick = (modelName: string = "", event?: React.MouseEvent<HTMLElement>) => {
     try {
-      // Get the clicked element from the event
+      // Get the clicked element and its details
       const clickedElement = event?.target as HTMLElement;
       const whatsappUrl = `https://wa.me/${whatsappNumber}`;
       
-      // Get timestamp
-      const timestamp = new Date().toISOString();
+      // Find the closest button or anchor parent
+      const closestButton = clickedElement?.closest('button, a') || clickedElement;
       
-      // Find the closest button or anchor parent with null checks
-      const closestButton = clickedElement?.closest('button, a');
-      
-      // Get the form if the element is within a form
-      const form = clickedElement?.closest('form');
-      
-      // Enhanced GTM tracking with complete details and null checks
+      // Get button specific data
+      const buttonId = closestButton?.id || '';
+      const buttonText = closestButton?.textContent?.trim() || '';
+      const buttonType = closestButton?.getAttribute('type') || 'button';
+
+      // Enhanced GTM tracking with complete details
       const eventData = {
         event: 'whatsapp_click',
-        event_time: timestamp || '',
+        event_time: new Date().toISOString(),
         content_name: 'WhatsApp Click',
         content_category: 'Contact',
         platform: platform || 'unknown',
-        whatsapp_number: whatsappNumber || '',
-        whatsapp_url: whatsappUrl || '',
-        page_location: window.location.href || '',
-        page_title: document.title || '',
-        interaction_type: 'WhatsApp Button Click',
-        device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
-        source: document.referrer || 'direct',
-        
-        // Click details with null checks
-        click_classes: clickedElement?.classList?.toString() || '',
-        click_element: clickedElement?.tagName?.toLowerCase() || '',
-        click_id: clickedElement?.id || closestButton?.id || '',
-        click_text: clickedElement?.textContent?.trim() || closestButton?.textContent?.trim() || '',
-        click_target: clickedElement?.getAttribute('target') || closestButton?.getAttribute('target') || '_blank',
-        click_url: (closestButton as HTMLAnchorElement)?.href || whatsappUrl || '',
-        
-        // Form details with null checks
-        form_classes: form?.classList?.toString() || '',
-        form_element: form?.tagName?.toLowerCase() || '',
-        form_id: form?.id || '',
-        form_target: form?.getAttribute('target') || '',
-        form_text: form?.textContent?.trim() || '',
-        form_url: form?.action || '',
-        
-        // Button context with null checks
-        button_text: closestButton?.textContent?.trim() || '',
-        button_type: closestButton?.getAttribute('type') || 'button',
-        button_classes: closestButton?.classList?.toString() || '',
-        
-        // Additional context
+        whatsapp_number: whatsappNumber,
+        whatsapp_url: whatsappUrl,
+        page_location: window.location.href,
+        page_title: document.title,
+        button_id: buttonId,
+        button_text: buttonText,
+        button_type: buttonType,
         model_name: modelName || 'general_inquiry',
         element_type: 'whatsapp_button',
-        
-        // Debug information
-        debug_timestamp: new Date().getTime(),
-        debug_user_agent: navigator.userAgent,
-        debug_platform: navigator.platform,
-        debug_screen_size: `${window.innerWidth}x${window.innerHeight}`
+        device_type: /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+        source: document.referrer || 'direct'
       };
 
       // Log the event data for debugging
       console.log('WhatsApp Click Event Data:', eventData);
 
-      // Track across all platforms with error handling
-      try {
-        trackFBEvent('Contact', eventData);
-        trackSnapEvent('CONTACT', eventData);
-        trackTikTokEvent('Contact', eventData);
-        trackGoogleEvent('Contact', eventData);
-        
-        // Push to GTM with complete data
-        pushToDataLayer(eventData);
-      } catch (trackingError) {
-        console.error('Error tracking event:', trackingError);
-      }
+      // First push to GTM
+      pushToDataLayer(eventData);
 
-    } catch (error) {
+      // Then track across other platforms
+      trackFBEvent('Contact', eventData);
+      trackSnapEvent('CONTACT', eventData);
+      trackTikTokEvent('Contact', eventData);
+      trackGoogleEvent('Contact', eventData);
+
+    } catch (error: unknown) {
       console.error('Error in trackWhatsAppClick:', error);
-      
-      // Send minimal event data in case of error
-      const fallbackEventData = {
+      pushToDataLayer({
         event: 'whatsapp_click_error',
-        error_message: error.message,
+        error_message: error instanceof Error ? error.message : 'Unknown error',
         timestamp: new Date().toISOString()
-      };
-      pushToDataLayer(fallbackEventData);
+      });
     }
   }
 
@@ -180,7 +145,7 @@ export default function LandingPage() {
     // First track the click
     trackWhatsAppClick(modelName, event);
     
-    // Open WhatsApp in a new tab
+    // Then open WhatsApp in a new tab
     window.open(whatsappUrl, "_blank");
   }
 
@@ -1583,6 +1548,7 @@ export default function LandingPage() {
               className="bg-[#c48765] hover:bg-[#34222e] text-white px-6 flex items-center gap-2"
               onClick={(e) => onInquire(title)}
               id="whatsapp-cta-button"
+              
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
