@@ -78,8 +78,7 @@ export default function LandingPage() {
   // For scroll progress
   const [scrollProgress, setScrollProgress] = useState<number>(0)
 
-  // WhatsApp phone number
-  const whatsappNumber = "966536667967"
+
 
   // Function to share the project
   const shareProject = async () => {
@@ -347,8 +346,8 @@ export default function LandingPage() {
       content_name: 'WhatsApp Click',
       content_category: 'Contact',
       platform: platform,
-      whatsapp_number: whatsappNumber,
-      whatsapp_url: `https://wa.me/${whatsappNumber}`,
+      whatsapp_number: '966536667967',
+      whatsapp_url: `https://wa.me/966536667967`,
       page_location: window.location.href,
       page_title: document.title,
       interaction_type: 'WhatsApp Click',
@@ -367,7 +366,7 @@ export default function LandingPage() {
     });
 
     // Open WhatsApp
-    window.open(`https://wa.me/${whatsappNumber}`, '_blank');
+    window.open(`https://wa.me/966536667967`, '_blank');
   };
 
   return (
