@@ -17,7 +17,8 @@ export const metadata: Metadata = {
   title: "مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة",
   description: "مشروع سكني متميز في حي الزهراء بجدة بأسعار استثنائية تبدأ من 830000 ﷼ فقط",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  keywords: ["مشروع 24", "حي الزهراء", "جدة", "منزل العمر", "سكني", "أسعار استثنائية", "830000 ﷼", "امتلك منزل العمر في جدة"],
 }
 
 export default function RootLayout({
@@ -41,7 +42,7 @@ export default function RootLayout({
           content="مشروع سكني متميز في حي الزهراء بجدة بأسعار استثنائية تبدأ من 830000 ﷼ فقط"
         />
         <meta property="og:image" content="/placeholder.svg?height=1200&width=1200&text=مشروع 24 - حي الزهراء" />
-        <meta property="og:url" content="https://example.com/project24" />
+        <meta property="og:url" content="https://project24.raf-advanced.sa/" />
         <meta property="og:type" content="website" />
       </head>
       <body className={ibm.className}>
