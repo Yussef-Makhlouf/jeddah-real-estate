@@ -186,7 +186,7 @@ export default function LandingPage() {
 
     try {
       // Send email through API
-      const response = await fetch('/api/send-email', {
+      const response = await fetch('/app/api/send-email/route.ts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
