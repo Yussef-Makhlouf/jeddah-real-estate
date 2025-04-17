@@ -191,6 +191,17 @@ const createEmailTemplate = (name: string, phone: string, message: string, sourc
 `;
 
 export async function POST(request: Request) {
+  // Set CORS headers
+  const headers = new Headers({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  });
+
+  // Handle OPTIONS request for CORS preflight
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, { headers, status: 200 });
+  }
   try {
     const { name, phone, message, source } = await request.json();
 
@@ -218,4 +229,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}
