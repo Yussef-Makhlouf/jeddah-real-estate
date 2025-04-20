@@ -341,13 +341,18 @@ export default function LandingPage() {
   // Add WhatsApp tracking function
   const handleWhatsAppClick = () => {
     const timestamp = new Date().toISOString();
+    const message = `السلام عليكم ورحمة الله وبركاته 🌟
+أرغب بالاستفسار عن مشروع 24 - حي الزهراء في جدة`;
+    const whatsappUrl = `https://wa.me/966536667967?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
     const eventData = {
       event_time: timestamp,
       content_name: 'WhatsApp Click',
       content_category: 'Contact',
       platform: platform,
       whatsapp_number: '966536667967',
-      whatsapp_url: `https://wa.me/966536667967`,
+      whatsapp_url: whatsappUrl,
       page_location: window.location.href,
       page_title: document.title,
       interaction_type: 'WhatsApp Click',
