@@ -30,9 +30,11 @@ import { trackGoogleEvent } from './components/GoogleAnalytics';
 //   }
 // });
 
-export default function LandingPage() {
+export default function LandingPage({ platform: propPlatform, defaultMessage }: { platform?: string, defaultMessage?: string } = {}) {
   // Platform detection (would be server-side in production)
-  const [platform, setPlatform] = useState<string>("social")
+  const [platform, setPlatform] = useState<string>(propPlatform || "facebook")
+  // Platform detection (would be server-side in production)
+
   interface MobileModelCardProps {
     title: string;
     subtitle: string;
@@ -83,7 +85,7 @@ export default function LandingPage() {
   // Function to share the project
   const shareProject = async () => {
     const shareData = {
-      title: "مشروع 24 - حي الزهراء | امتلك منزل العمر في جدة",
+      title: "مشروع سكني متميز في حي الزهراء بجدة",
       text: "مشروع سكني متميز في حي الزهراء بجدة بأسعار استثنائية تبدأ من 830000 ﷼ فقط",
       url: window.location.href,
     }
@@ -156,7 +158,7 @@ export default function LandingPage() {
   const [selectedModel, setSelectedModel] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', message: defaultMessage || '' });
   interface FormErrors {
     name?: string;
     phone?: string;
@@ -341,8 +343,14 @@ export default function LandingPage() {
   // Add WhatsApp tracking function
   const handleWhatsAppClick = () => {
     const timestamp = new Date().toISOString();
-    const message = `السلام عليكم ورحمة الله وبركاته 🌟
-أرغب بالاستفسار عن مشروع 24 - حي الزهراء في جدة`;
+    const welcomeMessages = {
+      snapchat: "السلام عليكم ورحمة الله، ارغب بالاستفسار عن المشروع",
+      tiktok: "مرحباً ، السلام عليكم ورحمة الله، ارغب بالاستفسار عن المشروع",
+      meta: "مرحباً، أرغب بالاستفسار عن المشروع",
+      google: "السلام عليكم ورحمة الله وبركاته، ارغب بالاستفسار عن المشروع",
+      facebook: "السلام عليكم ورحمة الله وبركاته 🌟\nأرغب بالاستفسار عن مشروع 24 - حي الزهراء في جدة"
+    };
+    const message = welcomeMessages[platform as keyof typeof welcomeMessages] || welcomeMessages.facebook;
     const whatsappUrl = `https://wa.me/966536667967?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
@@ -479,14 +487,14 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-black/60"></div> {/* Added dark overlay */}
         <div className="container mx-auto px-4 relative"> {/* Added relative positioning */}
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold text-[#FFD700] mb-6">
-              امتلك منزل العمر في جدة
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              مشروع سكني متميز في حي الزهراء بجدة
             </h1>
-            <h2 className="text-2xl md:text-3xl text-[#ffff] font-medium mb-4">
-              مشروع 24-حي الزهراء
+            <h2 className="text-2xl md:text-3xl text-white font-medium mb-4">
+              بأسعار تبدأ من 830,000 ريال
             </h2>
-            <p className="text-2xl md:text-3xl text-[#ffff] font-bold">
-              بأسعار تبدأ من 830,000 <Image src="/riyal.svg" alt="ريال" width={40} height={50} className="inline  invert" /> فقط
+            <p className="text-xl md:text-2xl text-white/90 mt-4">
+              امتلك منزل أحلامك في أفضل مواقع جدة
             </p>
           </div>
 
@@ -1149,6 +1157,11 @@ export default function LandingPage() {
                 <p className="text-sm">سارع بالحجز قبل نفاد الوحدات المتاحة</p>
               </div>
               <CardContent className="p-4 bg-white">
+                <div className="mb-6 text-center">
+                  <div className="text-lg font-semibold text-[#34222e]">الرقم الموحد</div>
+                  <div className="text-2xl font-bold text-[#c48765] mt-2 ">920031103</div>
+                  <div className="text-sm text-[#34222e] font-semibold mt-1">جميع الخدمات</div>
+                </div>
                 <Link href="https://wa.me/966536667967" target="_blank">
                 <Button
                   onClick={handleWhatsAppClick}
@@ -1162,7 +1175,7 @@ export default function LandingPage() {
                 </Button>
                 </Link>
 
-                <div className="text-center mt-4 text-sm text-slate-500">أو اتصل بنا مباشرة</div>
+                <div className="text-center mt-4 font-semibold text-sm text-slate-500">أو اتصل بنا مباشرة على رقم التسويق </div>
 
                 <a
                   href="tel:0536667967"
