@@ -1159,7 +1159,13 @@ export default function LandingPage({ platform: propPlatform, defaultMessage }: 
               <CardContent className="p-4 bg-white">
                 <div className="mb-6 text-center">
                   <div className="text-lg font-semibold text-[#34222e]">الرقم الموحد</div>
-                  <div className="text-2xl font-bold text-[#c48765] mt-2 ">920031103</div>
+                  <a 
+                    href="tel:920031103"
+                    onClick={handlePhoneClick}
+                    className="text-2xl font-bold text-[#c48765] mt-2 hover:text-[#34222e] transition-colors"
+                  >
+                    920031103
+                  </a>
                   <div className="text-sm text-[#34222e] font-semibold mt-1">جميع الخدمات</div>
                 </div>
                 <Link href="https://wa.me/966536667967" target="_blank">
