@@ -483,14 +483,14 @@ export default function LandingPage({ platform: propPlatform, defaultMessage }: 
       </div>
 
       {/* Platform badge */}
-      {platform !== "social" && (
+      {/* {platform !== "social" && (
         <div className="fixed top-3 left-3 z-40 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium shadow-md">
           {platform === "google" && "إعلان Google"}
           {platform === "tiktok" && "إعلان TikTok"}
           {platform === "snapchat" && "إعلان Snapchat"}
           {platform === "meta" && "إعلان Meta"}
         </div>
-      )}
+      )} */}
 
       {/* Share button */}
       <button
@@ -507,7 +507,7 @@ export default function LandingPage({ platform: propPlatform, defaultMessage }: 
         <div className="container mx-auto px-4 relative"> {/* Added relative positioning */}
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              مشروع سكني متميز في حي الزهراء بجدة
+              مشروع سكني متميز <br />في حي الزهراء بجدة
             </h1>
         
             <h2 className="text-2xl md:text-3xl text-white font-medium mb-4">
@@ -638,29 +638,29 @@ export default function LandingPage({ platform: propPlatform, defaultMessage }: 
               ))}
             </div>
             
-            {/* Navigation arrows for larger screens */}
-            <div className="hidden md:block">
+            {/* Navigation arrows for all screens */}
+            <div className="block">
               <button 
-                className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+                className="absolute top-1/2 right-2 md:right-4 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-2 md:p-3 rounded-full shadow-lg hover:bg-white transition-colors z-10"
                 onClick={() => {
                   const container = document.querySelector('.overflow-x-auto');
                   if (container) {
-                    container.scrollBy({ left: -400, behavior: 'smooth' });
+                    container.scrollBy({ left: -300, behavior: 'smooth' });
                   }
                 }}
               >
-                <ChevronDown className="h-6 w-6 -rotate-90 text-[#c48765]" />
+                <ChevronDown className="h-4 w-4 md:h-6 md:w-6 -rotate-90 text-[#c48765]" />
               </button>
               <button 
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+                className="absolute top-1/2 left-2 md:left-4 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-2 md:p-3 rounded-full shadow-lg hover:bg-white transition-colors z-10"
                 onClick={() => {
                   const container = document.querySelector('.overflow-x-auto');
                   if (container) {
-                    container.scrollBy({ left: 400, behavior: 'smooth' });
+                    container.scrollBy({ left: 300, behavior: 'smooth' });
                   }
                 }}
               >
-                <ChevronDown className="h-6 w-6 rotate-90 text-[#c48765]" />
+                <ChevronDown className="h-4 w-4 md:h-6 md:w-6 rotate-90 text-[#c48765]" />
               </button>
             </div>
 
@@ -936,6 +936,7 @@ export default function LandingPage({ platform: propPlatform, defaultMessage }: 
             <h2 className="text-2xl md:text-3xl font-bold text-center">نماذج المشروع</h2>
             <div className="w-16 h-1 bg-[#c48765] mr-auto ml-auto mt-2"></div>
           </motion.div>
+          
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1131,8 +1132,7 @@ export default function LandingPage({ platform: propPlatform, defaultMessage }: 
               {/* Map Container */}
               <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3710.207909503884!2d39.1993937641382!3d21.5335112481012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21a4a8b2b2b2b%3A0x8b2b2b2b2b2b2b2b!2sG5MX%2BCP3%D8%8C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86%D8%8C%20%D9%85%D8%B4%D8%B1%D9%81%D8%A9%D8%8C%20%D8%AC%D8%AF%D8%A9%2023335%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9!5e0!3m2!1sen!2ssa!4v1710615222226!5m2!1sen!2ssa"
-                  className="absolute inset-0 w-full h-full"
+ src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3709.430667951573!2d39.14033718505742!3d21.60813558568744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDM2JzI5LjMiTiAzOcKwMDgnMTcuMyJF!5e0!3m2!1sar!2seg!4v1752662254447!5m2!1sar!2seg"                  className="absolute inset-0 w-full h-full"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
